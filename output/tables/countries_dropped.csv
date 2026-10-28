@@ -1,0 +1,246 @@
+variant,country,iso3c,feature,share_missing
+main,Algeria,DZA,sec_enroll,0.4
+main,American Samoa,ASM,sec_enroll,1
+main,American Samoa,ASM,u5_mort,1
+main,Angola,AGO,sec_enroll,0.6
+main,Antigua and Barbuda,ATG,sec_enroll,0.45
+main,Aruba,ABW,u5_mort,1
+main,Australia,AUS,sec_enroll,0.75
+main,Azerbaijan,AZE,sec_enroll,0.5
+main,Belarus,BLR,sec_enroll,0.4
+main,Benin,BEN,sec_enroll,0.5
+main,Bermuda,BMU,sec_enroll,0.4
+main,Bermuda,BMU,u5_mort,1
+main,Bosnia and Herzegovina,BIH,sec_enroll,0.35
+main,Botswana,BWA,sec_enroll,0.55
+main,Brazil,BRA,sec_enroll,0.6
+main,British Virgin Islands,VGB,gdp_pc,1
+main,Cambodia,KHM,sec_enroll,0.45
+main,Cayman Islands,CYM,sec_enroll,0.35
+main,Cayman Islands,CYM,u5_mort,1
+main,Central African Republic,CAF,sec_enroll,0.6842105263157895
+main,Channel Islands,CHI,gdp_pc,0.45
+main,Channel Islands,CHI,sec_enroll,1
+main,Channel Islands,CHI,u5_mort,1
+main,China,CHN,sec_enroll,0.45
+main,Comoros,COM,sec_enroll,0.65
+main,"Congo, Dem. Rep.",COD,sec_enroll,0.55
+main,"Congo, Rep.",COG,sec_enroll,0.8
+main,Cote d'Ivoire,CIV,sec_enroll,0.7
+main,Curacao,CUW,sec_enroll,0.95
+main,Curacao,CUW,u5_mort,1
+main,Djibouti,DJI,gdp_pc,0.65
+main,Djibouti,DJI,sec_enroll,1
+main,Equatorial Guinea,GNQ,sec_enroll,0.8
+main,Eritrea,ERI,gdp_pc,0.4
+main,Faroe Islands,FRO,gdp_pc,0.4
+main,Faroe Islands,FRO,sec_enroll,1
+main,Faroe Islands,FRO,u5_mort,1
+main,French Polynesia,PYF,sec_enroll,1
+main,French Polynesia,PYF,u5_mort,1
+main,Gabon,GAB,sec_enroll,0.85
+main,"Gambia, The",GMB,sec_enroll,0.85
+main,Gibraltar,GIB,gdp_pc,1
+main,Gibraltar,GIB,sec_enroll,0.65
+main,Gibraltar,GIB,u5_mort,1
+main,Greenland,GRL,sec_enroll,1
+main,Greenland,GRL,u5_mort,1
+main,Guam,GUM,sec_enroll,1
+main,Guam,GUM,u5_mort,1
+main,Guinea,GIN,sec_enroll,0.5
+main,Guinea-Bissau,GNB,sec_enroll,0.85
+main,Guyana,GUY,sec_enroll,0.55
+main,Haiti,HTI,sec_enroll,1
+main,Honduras,HND,sec_enroll,0.4
+main,"Hong Kong SAR, China",HKG,u5_mort,1
+main,Iraq,IRQ,sec_enroll,0.75
+main,Isle of Man,IMN,sec_enroll,1
+main,Isle of Man,IMN,u5_mort,1
+main,Japan,JPN,sec_enroll,0.65
+main,Kazakhstan,KAZ,sec_enroll,0.4
+main,Kenya,KEN,sec_enroll,0.4
+main,Kiribati,KIR,sec_enroll,0.55
+main,"Korea, Dem. People's Rep.",PRK,gdp_pc,1
+main,"Korea, Dem. People's Rep.",PRK,sec_enroll,0.95
+main,Kosovo,XKX,gdp_pc,0.4
+main,Kosovo,XKX,sec_enroll,1
+main,Liberia,LBR,sec_enroll,0.8
+main,Libya,LBY,sec_enroll,0.8
+main,Liechtenstein,LIE,gdp_pc,0.95
+main,Liechtenstein,LIE,u5_mort,1
+main,"Macao SAR, China",MAC,u5_mort,1
+main,Madagascar,MDG,sec_enroll,0.35
+main,Marshall Islands,MHL,sec_enroll,0.45
+main,"Micronesia, Fed. Sts.",FSM,sec_enroll,0.9
+main,Moldova,MDA,sec_enroll,0.5
+main,Monaco,MCO,sec_enroll,0.85
+main,Mongolia,MNG,sec_enroll,0.45
+main,Naoero,NRU,sec_enroll,0.35
+main,New Caledonia,NCL,gdp_pc,0.95
+main,New Caledonia,NCL,sec_enroll,1
+main,New Caledonia,NCL,u5_mort,1
+main,Nicaragua,NIC,sec_enroll,0.55
+main,Northern Mariana Islands,MNP,sec_enroll,1
+main,Northern Mariana Islands,MNP,u5_mort,1
+main,Palau,PLW,sec_enroll,0.6
+main,Papua New Guinea,PNG,sec_enroll,0.85
+main,Puerto Rico (US),PRI,sec_enroll,0.55
+main,Puerto Rico (US),PRI,u5_mort,1
+main,San Marino,SMR,sec_enroll,0.6
+main,Saudi Arabia,SAU,sec_enroll,0.5
+main,Sierra Leone,SLE,sec_enroll,0.55
+main,Singapore,SGP,sec_enroll,0.8
+main,Sint Maarten (Dutch part),SXM,gdp_pc,0.45
+main,Sint Maarten (Dutch part),SXM,sec_enroll,0.9
+main,Sint Maarten (Dutch part),SXM,u5_mort,1
+main,Solomon Islands,SLB,sec_enroll,0.55
+main,"Somalia, Fed. Rep.",SOM,sec_enroll,0.95
+main,South Sudan,SSD,gdp_pc,0.6
+main,South Sudan,SSD,sec_enroll,0.9
+main,Sri Lanka,LKA,sec_enroll,0.55
+main,St. Martin (French part),MAF,gdp_pc,1
+main,St. Martin (French part),MAF,sec_enroll,1
+main,St. Martin (French part),MAF,u5_mort,1
+main,Tanzania,TZA,sec_enroll,0.6
+main,Togo,TGO,sec_enroll,0.5
+main,Trinidad and Tobago,TTO,sec_enroll,0.95
+main,Turkmenistan,TKM,sec_enroll,0.95
+main,Turks and Caicos Islands,TCA,gdp_pc,0.35
+main,Turks and Caicos Islands,TCA,sec_enroll,0.45
+main,Tuvalu,TUV,sec_enroll,0.7
+main,Uganda,UGA,sec_enroll,0.9
+main,United Arab Emirates,ARE,sec_enroll,0.9
+main,United States,USA,sec_enroll,0.6
+main,Vanuatu,VUT,sec_enroll,0.65
+main,Viet Nam,VNM,sec_enroll,0.75
+main,Virgin Islands (U.S.),VIR,sec_enroll,1
+main,Virgin Islands (U.S.),VIR,u5_mort,1
+main,"Yemen, Rep.",YEM,sec_enroll,0.5
+main,Zambia,ZMB,sec_enroll,1
+main,Zimbabwe,ZWE,sec_enroll,0.7
+prim,American Samoa,ASM,prim_enroll,1
+prim,American Samoa,ASM,u5_mort,1
+prim,Angola,AGO,prim_enroll,0.7
+prim,Aruba,ABW,u5_mort,1
+prim,Bangladesh,BGD,prim_enroll,0.6
+prim,Bermuda,BMU,prim_enroll,0.4
+prim,Bermuda,BMU,u5_mort,1
+prim,Bosnia and Herzegovina,BIH,prim_enroll,0.35
+prim,Brazil,BRA,prim_enroll,0.6
+prim,British Virgin Islands,VGB,gdp_pc,1
+prim,Cayman Islands,CYM,prim_enroll,0.35
+prim,Cayman Islands,CYM,u5_mort,1
+prim,Central African Republic,CAF,prim_enroll,0.3684210526315789
+prim,Channel Islands,CHI,gdp_pc,0.45
+prim,Channel Islands,CHI,prim_enroll,1
+prim,Channel Islands,CHI,u5_mort,1
+prim,Comoros,COM,prim_enroll,0.45
+prim,"Congo, Dem. Rep.",COD,prim_enroll,0.45
+prim,Curacao,CUW,prim_enroll,0.95
+prim,Curacao,CUW,u5_mort,1
+prim,Djibouti,DJI,gdp_pc,0.65
+prim,Djibouti,DJI,prim_enroll,1
+prim,Equatorial Guinea,GNQ,prim_enroll,0.45
+prim,Eritrea,ERI,gdp_pc,0.4
+prim,Faroe Islands,FRO,gdp_pc,0.4
+prim,Faroe Islands,FRO,prim_enroll,1
+prim,Faroe Islands,FRO,u5_mort,1
+prim,French Polynesia,PYF,prim_enroll,1
+prim,French Polynesia,PYF,u5_mort,1
+prim,Gabon,GAB,prim_enroll,0.75
+prim,Gibraltar,GIB,gdp_pc,1
+prim,Gibraltar,GIB,prim_enroll,0.65
+prim,Gibraltar,GIB,u5_mort,1
+prim,Greenland,GRL,prim_enroll,1
+prim,Greenland,GRL,u5_mort,1
+prim,Guam,GUM,prim_enroll,1
+prim,Guam,GUM,u5_mort,1
+prim,Guinea-Bissau,GNB,prim_enroll,0.7
+prim,Guyana,GUY,prim_enroll,0.45
+prim,Haiti,HTI,prim_enroll,0.95
+prim,"Hong Kong SAR, China",HKG,u5_mort,1
+prim,Iraq,IRQ,prim_enroll,0.8
+prim,Isle of Man,IMN,prim_enroll,1
+prim,Isle of Man,IMN,u5_mort,1
+prim,Japan,JPN,prim_enroll,0.65
+prim,"Korea, Dem. People's Rep.",PRK,gdp_pc,1
+prim,"Korea, Dem. People's Rep.",PRK,prim_enroll,0.9
+prim,Kosovo,XKX,gdp_pc,0.4
+prim,Kosovo,XKX,prim_enroll,1
+prim,Liberia,LBR,prim_enroll,0.5
+prim,Libya,LBY,prim_enroll,0.7
+prim,Liechtenstein,LIE,gdp_pc,0.95
+prim,Liechtenstein,LIE,u5_mort,1
+prim,"Macao SAR, China",MAC,u5_mort,1
+prim,Marshall Islands,MHL,prim_enroll,0.4
+prim,"Micronesia, Fed. Sts.",FSM,prim_enroll,0.5
+prim,Moldova,MDA,prim_enroll,0.5
+prim,Monaco,MCO,prim_enroll,0.85
+prim,New Caledonia,NCL,gdp_pc,0.95
+prim,New Caledonia,NCL,prim_enroll,1
+prim,New Caledonia,NCL,u5_mort,1
+prim,Nicaragua,NIC,prim_enroll,0.5
+prim,Northern Mariana Islands,MNP,prim_enroll,1
+prim,Northern Mariana Islands,MNP,u5_mort,1
+prim,Palau,PLW,prim_enroll,0.6
+prim,Papua New Guinea,PNG,prim_enroll,0.35
+prim,Puerto Rico (US),PRI,prim_enroll,0.55
+prim,Puerto Rico (US),PRI,u5_mort,1
+prim,San Marino,SMR,prim_enroll,0.55
+prim,Sierra Leone,SLE,prim_enroll,0.5
+prim,Singapore,SGP,prim_enroll,0.8
+prim,Sint Maarten (Dutch part),SXM,gdp_pc,0.45
+prim,Sint Maarten (Dutch part),SXM,prim_enroll,0.9
+prim,Sint Maarten (Dutch part),SXM,u5_mort,1
+prim,"Somalia, Fed. Rep.",SOM,prim_enroll,0.95
+prim,South Sudan,SSD,gdp_pc,0.6
+prim,South Sudan,SSD,prim_enroll,0.9
+prim,St. Martin (French part),MAF,gdp_pc,1
+prim,St. Martin (French part),MAF,prim_enroll,1
+prim,St. Martin (French part),MAF,u5_mort,1
+prim,Trinidad and Tobago,TTO,prim_enroll,0.5
+prim,Turkmenistan,TKM,prim_enroll,0.95
+prim,Turks and Caicos Islands,TCA,gdp_pc,0.35
+prim,Turks and Caicos Islands,TCA,prim_enroll,0.4
+prim,Tuvalu,TUV,prim_enroll,0.4
+prim,United Arab Emirates,ARE,prim_enroll,0.55
+prim,United States,USA,prim_enroll,0.6
+prim,Virgin Islands (U.S.),VIR,prim_enroll,1
+prim,Virgin Islands (U.S.),VIR,u5_mort,1
+prim,"Yemen, Rep.",YEM,prim_enroll,0.45
+prim,Zimbabwe,ZWE,prim_enroll,0.4
+noedu,American Samoa,ASM,u5_mort,1
+noedu,Aruba,ABW,u5_mort,1
+noedu,Bermuda,BMU,u5_mort,1
+noedu,British Virgin Islands,VGB,gdp_pc,1
+noedu,Cayman Islands,CYM,u5_mort,1
+noedu,Channel Islands,CHI,gdp_pc,0.45
+noedu,Channel Islands,CHI,u5_mort,1
+noedu,Curacao,CUW,u5_mort,1
+noedu,Djibouti,DJI,gdp_pc,0.65
+noedu,Eritrea,ERI,gdp_pc,0.4
+noedu,Faroe Islands,FRO,gdp_pc,0.4
+noedu,Faroe Islands,FRO,u5_mort,1
+noedu,French Polynesia,PYF,u5_mort,1
+noedu,Gibraltar,GIB,gdp_pc,1
+noedu,Gibraltar,GIB,u5_mort,1
+noedu,Greenland,GRL,u5_mort,1
+noedu,Guam,GUM,u5_mort,1
+noedu,"Hong Kong SAR, China",HKG,u5_mort,1
+noedu,Isle of Man,IMN,u5_mort,1
+noedu,"Korea, Dem. People's Rep.",PRK,gdp_pc,1
+noedu,Kosovo,XKX,gdp_pc,0.4
+noedu,Liechtenstein,LIE,gdp_pc,0.95
+noedu,Liechtenstein,LIE,u5_mort,1
+noedu,"Macao SAR, China",MAC,u5_mort,1
+noedu,New Caledonia,NCL,gdp_pc,0.95
+noedu,New Caledonia,NCL,u5_mort,1
+noedu,Northern Mariana Islands,MNP,u5_mort,1
+noedu,Puerto Rico (US),PRI,u5_mort,1
+noedu,Sint Maarten (Dutch part),SXM,gdp_pc,0.45
+noedu,Sint Maarten (Dutch part),SXM,u5_mort,1
+noedu,South Sudan,SSD,gdp_pc,0.6
+noedu,St. Martin (French part),MAF,gdp_pc,1
+noedu,St. Martin (French part),MAF,u5_mort,1
+noedu,Turks and Caicos Islands,TCA,gdp_pc,0.35
+noedu,Virgin Islands (U.S.),VIR,u5_mort,1

@@ -1,0 +1,163 @@
+indicator,country,iso3c,year,value,yoy_change,flag
+gdp_pc,Central African Republic,CAF,2013,349.821171688973,-0.4592543559111144,yoy_jump
+gdp_pc,Iraq,IRQ,2003,2250.06990123369,-0.48675463991080115,yoy_jump
+gdp_pc,Libya,LBY,2011,6569.59477578957,-0.6758546916390973,yoy_jump
+gdp_pc,Libya,LBY,2012,12599.258882136,0.6511858407170976,yoy_jump
+gdp_pc,South Sudan,SSD,2012,1069.19619080938,-0.6622053706782118,yoy_jump
+gdp_pc,Turks and Caicos Islands,TCA,2017,50586.1032335151,0.516398037167848,yoy_jump
+life_exp,Central African Republic,CAF,2014,40.265,-9.222000000000001,yoy_jump
+life_exp,Central African Republic,CAF,2015,51.934,11.668999999999997,yoy_jump
+life_exp,Central African Republic,CAF,2017,45.231,-5.768000000000001,yoy_jump
+life_exp,Central African Republic,CAF,2018,52.297,7.065999999999995,yoy_jump
+life_exp,Central African Republic,CAF,2019,31.53,-20.766999999999996,both
+life_exp,Haiti,HTI,2010,45.577,-16.117000000000004,yoy_jump
+life_exp,Haiti,HTI,2011,61.581,16.004000000000005,yoy_jump
+life_exp,"Korea, Dem. People's Rep.",PRK,2003,69.399,8.521999999999998,yoy_jump
+life_exp,Myanmar,MMR,2008,56.364,-6.003,yoy_jump
+life_exp,Myanmar,MMR,2009,63.095,6.731000000000002,yoy_jump
+life_exp,"Somalia, Fed. Rep.",SOM,2011,32.453,-16.446999999999996,yoy_jump
+life_exp,"Somalia, Fed. Rep.",SOM,2012,49.138,16.684999999999995,yoy_jump
+life_exp,"Somalia, Fed. Rep.",SOM,2013,54.016,4.878,yoy_jump
+life_exp,South Sudan,SSD,2014,45.625,-12.659999999999997,yoy_jump
+life_exp,South Sudan,SSD,2015,39.757,-5.868000000000002,yoy_jump
+life_exp,South Sudan,SSD,2018,51.905,16.554000000000002,yoy_jump
+life_exp,South Sudan,SSD,2019,58.129,6.223999999999997,yoy_jump
+life_exp,Sri Lanka,LKA,2004,68.022,-4.4199999999999875,yoy_jump
+life_exp,Sri Lanka,LKA,2005,73.073,5.050999999999988,yoy_jump
+life_exp,Sri Lanka,LKA,2010,74.463,4.164999999999992,yoy_jump
+life_exp,Syrian Arab Republic,SYR,2012,66.206,-6.052999999999997,yoy_jump
+population,Qatar,QAT,2007,1208595,0.2170034294203802,yoy_jump
+prim_enroll,Afghanistan,AFG,2000,21.4578495025635,NA,cross_section
+prim_enroll,Afghanistan,AFG,2001,22.1396503448486,0.6818008422850994,cross_section
+prim_enroll,Afghanistan,AFG,2002,73.4013137817383,51.26166343688969,yoy_jump
+prim_enroll,Burkina Faso,BFA,2001,44.3381385803223,1.5206069946288991,cross_section
+prim_enroll,Burkina Faso,BFA,2002,45.1330909729004,0.7949523925780966,cross_section
+prim_enroll,Burkina Faso,BFA,2003,47.5335502624512,2.4004592895508026,cross_section
+prim_enroll,Burkina Faso,BFA,2004,52.1790885925293,4.645538330078097,cross_section
+prim_enroll,Burkina Faso,BFA,2005,56.6982612609863,4.519172668457003,cross_section
+prim_enroll,Burkina Faso,BFA,2006,60.375,3.6767387390137003,cross_section
+prim_enroll,Central African Republic,CAF,2004,51.2870597839355,-8.400119781494205,cross_section
+prim_enroll,Central African Republic,CAF,2005,57.085090637207,5.798030853271506,cross_section
+prim_enroll,Central African Republic,CAF,2006,56.7010307312012,-0.38405990600580253,cross_section
+prim_enroll,Chad,TCD,2006,69.8574600219727,-0.45024108886710223,cross_section
+prim_enroll,Cote d'Ivoire,CIV,2006,59.5550498962402,-1.1562894185384327,cross_section
+prim_enroll,Cote d'Ivoire,CIV,2007,59.4631118774414,-0.0919380187987997,cross_section
+prim_enroll,Cote d'Ivoire,CIV,2008,62.3004684448242,2.8373565673827983,cross_section
+prim_enroll,Curacao,CUW,2013,175.821576412943,NA,cross_section
+prim_enroll,Equatorial Guinea,GNQ,2008,57.2042198181152,-3.7273775736491004,cross_section
+prim_enroll,Equatorial Guinea,GNQ,2009,56.3207702636719,-0.8834495544432954,cross_section
+prim_enroll,Equatorial Guinea,GNQ,2010,56.0219993591309,-0.2987709045410014,cross_section
+prim_enroll,Equatorial Guinea,GNQ,2011,54.6865997314453,-1.3353996276856037,cross_section
+prim_enroll,Equatorial Guinea,GNQ,2012,54.9725494384766,0.28594970703129974,cross_section
+prim_enroll,Equatorial Guinea,GNQ,2015,47.5486488342285,-2.4746335347493655,cross_section
+prim_enroll,Ethiopia,ETH,2001,57.1306991577148,4.8919677734375,cross_section
+prim_enroll,Ethiopia,ETH,2004,63.5657081604004,2.8635673522949006,cross_section
+prim_enroll,Gibraltar,GIB,2008,149.906631469727,6.043054853166855,cross_section
+prim_enroll,Gibraltar,GIB,2009,149.380447387695,-0.526184082031989,cross_section
+prim_enroll,Haiti,HTI,2016,183.989440244666,NA,cross_section
+prim_enroll,Liberia,LBR,2013,52.1977055032725,-24.274014630645247,both
+prim_enroll,Liberia,LBR,2014,92.5530201850852,40.3553146818127,yoy_jump
+prim_enroll,Madagascar,MDG,2015,138.833200771878,1.387414047777014,cross_section
+prim_enroll,Madagascar,MDG,2016,134.676592456536,-4.156608315341998,cross_section
+prim_enroll,Madagascar,MDG,2017,139.186670285989,4.510077829452996,cross_section
+prim_enroll,Madagascar,MDG,2018,132.689298160896,-6.4973721250930225,cross_section
+prim_enroll,Malawi,MWI,2014,140.734554498983,-0.15459632500702014,cross_section
+prim_enroll,Malawi,MWI,2015,139.547593190997,-1.186961307985996,cross_section
+prim_enroll,Malawi,MWI,2016,137.823026920131,-1.724566270865978,cross_section
+prim_enroll,Malawi,MWI,2017,139.233233518644,1.4102065985129855,cross_section
+prim_enroll,Malawi,MWI,2018,136.723876953125,-2.509356565518999,cross_section
+prim_enroll,Malawi,MWI,2019,139.274520404398,2.550643451273004,cross_section
+prim_enroll,Mali,MLI,2001,57.4527702331543,4.517318725585895,cross_section
+prim_enroll,Mali,MLI,2018,70.3689604909815,-4.304415448943303,cross_section
+prim_enroll,Monaco,MCO,2016,142.419937133789,2.276000022888125,cross_section
+prim_enroll,Naoero,NRU,2006,96.9380722045898,-24.4283065795902,yoy_jump
+prim_enroll,Nepal,NPL,2011,151.550483561125,4.463948652157995,cross_section
+prim_enroll,Nepal,NPL,2012,149.360557184797,-2.1899263763280032,cross_section
+prim_enroll,Nepal,NPL,2013,145.726105062929,-3.63445212186798,cross_section
+prim_enroll,Nepal,NPL,2014,143.002222135589,-2.7238829273400142,cross_section
+prim_enroll,Nepal,NPL,2015,143.572010949657,0.569788814068005,cross_section
+prim_enroll,Nepal,NPL,2016,139.177686890567,-4.394324059089996,cross_section
+prim_enroll,Nepal,NPL,2017,135.346176281377,-3.8315106091899906,cross_section
+prim_enroll,Nepal,NPL,2019,137.43376159668,1.043792657651494,cross_section
+prim_enroll,Niger,NER,2000,32.1440010070801,NA,cross_section
+prim_enroll,Niger,NER,2001,35.0507202148438,2.9067192077637003,cross_section
+prim_enroll,Niger,NER,2002,39.0056304931641,3.9549102783202983,cross_section
+prim_enroll,Niger,NER,2003,42.1091117858887,3.1034812927246023,cross_section
+prim_enroll,Niger,NER,2004,46.0418281555176,3.932716369628899,cross_section
+prim_enroll,Niger,NER,2005,47.7686805725098,1.7268524169922017,cross_section
+prim_enroll,Niger,NER,2006,48.2523002624512,0.48361968994139914,cross_section
+prim_enroll,Niger,NER,2007,50.5029983520508,2.2506980895996023,cross_section
+prim_enroll,Niger,NER,2008,54.2272987365723,3.7243003845214986,cross_section
+prim_enroll,Niger,NER,2009,57.9658889770508,3.7385902404785014,cross_section
+prim_enroll,Niger,NER,2010,61.5986113613618,3.632722384310995,cross_section
+prim_enroll,Niger,NER,2019,66.7727319163256,-3.803020006325248,cross_section
+prim_enroll,Nigeria,NGA,2015,25.5657563073792,-58.555901707113094,both
+prim_enroll,Nigeria,NGA,2016,78.8780517578125,53.3122954504333,yoy_jump
+prim_enroll,Pakistan,PAK,2006,68.5336532592773,-3.419692993164105,cross_section
+prim_enroll,Papua New Guinea,PNG,2003,56.1848297119141,-3.4834518432617045,cross_section
+prim_enroll,Papua New Guinea,PNG,2004,56.0239791870117,-0.1608505249024006,cross_section
+prim_enroll,Papua New Guinea,PNG,2005,57.029369354248,1.0053901672362997,cross_section
+prim_enroll,Papua New Guinea,PNG,2006,55.561408996582,-1.4679603576659943,cross_section
+prim_enroll,Papua New Guinea,PNG,2008,59.4429588317871,1.9407749176025497,cross_section
+prim_enroll,Rwanda,RWA,2006,148.047485351562,9.955825805663977,cross_section
+prim_enroll,Rwanda,RWA,2007,154.816009521484,6.768524169922017,cross_section
+prim_enroll,Rwanda,RWA,2008,154.724563598633,-0.09144592285099407,cross_section
+prim_enroll,Rwanda,RWA,2009,156.6142578125,1.8896942138669885,cross_section
+prim_enroll,Rwanda,RWA,2010,155.315788762649,-1.2984690498510076,cross_section
+prim_enroll,Rwanda,RWA,2011,154.129639895033,-1.186148867615998,cross_section
+prim_enroll,Rwanda,RWA,2012,153.371821344578,-0.7578185504549992,cross_section
+prim_enroll,Rwanda,RWA,2013,123.70600355437401,-29.665817790203988,yoy_jump
+prim_enroll,Rwanda,RWA,2014,138.315807313314,14.60980375893999,cross_section
+prim_enroll,Rwanda,RWA,2015,137.243191055886,-1.0726162574279954,cross_section
+prim_enroll,Rwanda,RWA,2016,140.620022753129,3.3768316972430057,cross_section
+prim_enroll,Rwanda,RWA,2017,139.309946965821,-1.3100757873079942,cross_section
+prim_enroll,Rwanda,RWA,2018,137.129353849659,-2.180593116162015,cross_section
+prim_enroll,Rwanda,RWA,2019,138.020075127914,0.8907212782550005,cross_section
+prim_enroll,Saudi Arabia,SAU,2013,99.3784710993113,-29.96953010523569,yoy_jump
+prim_enroll,Seychelles,SYC,2017,132.235879426397,6.016709022809991,cross_section
+prim_enroll,Sierra Leone,SLE,2019,145.617495471991,31.037257233350985,both
+prim_enroll,"Somalia, Fed. Rep.",SOM,2007,22.7854194641113,NA,cross_section
+prim_enroll,St. Kitts and Nevis,KNA,2019,129.53181272509,-0.5527340104670202,cross_section
+prim_enroll,Sudan,SDN,2001,54.9207382202148,NA,cross_section
+prim_enroll,Sudan,SDN,2002,55.170108795166,0.2493705749512003,cross_section
+prim_enroll,Sudan,SDN,2003,56.535831451416,1.36572265625,cross_section
+prim_enroll,Sudan,SDN,2004,58.0592002868652,1.5233688354491974,cross_section
+prim_enroll,Sudan,SDN,2005,59.3962097167969,1.3370094299317046,cross_section
+prim_enroll,Sudan,SDN,2006,63.7515182495117,4.355308532714794,cross_section
+prim_enroll,Sudan,SDN,2007,63.5354995727539,-0.2160186767577983,cross_section
+prim_enroll,Sudan,SDN,2012,66.0605392456055,1.0843582153321023,cross_section
+prim_enroll,Sudan,SDN,2014,67.05712890625,0.10009765625,cross_section
+prim_enroll,Sudan,SDN,2015,67.6649703979492,0.6078414916992045,cross_section
+prim_enroll,Sudan,SDN,2016,69.8550796508789,2.1901092529297017,cross_section
+prim_enroll,Sudan,SDN,2017,70.3664779663086,0.5113983154296875,cross_section
+prim_enroll,Syrian Arab Republic,SYR,2013,72.3519897460938,-47.84111785888619,yoy_jump
+prim_enroll,Timor-Leste,TLS,2001,151.196975708008,NA,cross_section
+prim_enroll,Ukraine,UKR,2003,99.2439193725586,-27.811248779296406,yoy_jump
+sec_enroll,Finland,FIN,2013,145.653442382812,35.69076538085899,yoy_jump
+sec_enroll,Ireland,IRL,2018,154.163345336914,29.13617706298801,yoy_jump
+sec_enroll,St. Kitts and Nevis,KNA,2013,121.377906799316,29.160987854003494,yoy_jump
+sec_enroll,Sweden,SWE,2004,101.425491333008,-35.04881286621101,yoy_jump
+sec_enroll,Sweden,SWE,2013,132.713500976562,29.606628417967983,yoy_jump
+sec_enroll,Thailand,THA,2014,123.525459289551,39.670608520508,yoy_jump
+sec_enroll,Thailand,THA,2017,79.5062371844027,-43.05697997868329,yoy_jump
+sec_enroll,United Kingdom,GBR,2013,126.064338684082,33.53704833984371,yoy_jump
+u5_mort,"Bahamas, The",BHS,2019,24.3,0.5877866649021191,yoy_jump
+u5_mort,Central African Republic,CAF,2014,186.8,0.33070730125716086,yoy_jump
+u5_mort,Central African Republic,CAF,2015,113.7,-0.496475125038252,yoy_jump
+u5_mort,Central African Republic,CAF,2019,254.7,0.7509293598843039,yoy_jump
+u5_mort,Haiti,HTI,2010,137.7,0.5405538908621406,yoy_jump
+u5_mort,Haiti,HTI,2011,76.5,-0.5877866649021195,yoy_jump
+u5_mort,"Korea, Dem. People's Rep.",PRK,2003,34.5,-1.0419652530034575,yoy_jump
+u5_mort,Malawi,MWI,2001,239,0.33479999542885075,yoy_jump
+u5_mort,Malawi,MWI,2002,143.2,-0.5122212974049658,yoy_jump
+u5_mort,Myanmar,MMR,2008,101.7,0.3621683023548403,yoy_jump
+u5_mort,Myanmar,MMR,2009,65.1,-0.4461027538399902,yoy_jump
+u5_mort,"Somalia, Fed. Rep.",SOM,2011,363.1,0.6651752278726137,yoy_jump
+u5_mort,"Somalia, Fed. Rep.",SOM,2012,185.4,-0.6721626252885358,yoy_jump
+u5_mort,South Sudan,SSD,2014,182.6,0.6305272566944753,yoy_jump
+u5_mort,South Sudan,SSD,2018,133.7,-0.7811553181603843,yoy_jump
+u5_mort,Sri Lanka,LKA,2004,29,0.6460004021342436,yoy_jump
+u5_mort,Sri Lanka,LKA,2005,14,-0.7282385003712157,yoy_jump
+u5_mort,Sri Lanka,LKA,2009,21.5,0.5831462853456166,yoy_jump
+u5_mort,Sri Lanka,LKA,2010,11.2,-0.6521391568325683,yoy_jump
+u5_mort,Syrian Arab Republic,SYR,2012,34.2,0.45953232937844035,yoy_jump

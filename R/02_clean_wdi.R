@@ -6,6 +6,7 @@
 #   2. Report missingness per indicator and year
 #   3. Set implausible values to NA
 #   4. Drop rows missing the outcome (life expectancy)
+#   4b. Flag statistical outliers for review (report only; nothing is changed)
 #   5. Drop countries with more than 30% of any feature missing
 #   6. Interpolate short gaps within each country over time
 #   7. Keep complete cases and add log transforms
@@ -23,6 +24,7 @@
 #         output/tables/missingness_by_indicator_year.csv
 #         output/tables/countries_dropped.csv
 #         output/tables/variant_summary.csv
+#         output/tables/outliers_flagged.csv
 # Run from the project root (open Long-Live-Humanity.Rproj in RStudio).
 
 library(dplyr)
@@ -95,6 +97,50 @@ for (v in names(plausible)) {
 n_before <- nrow(wdi)
 wdi <- filter(wdi, !is.na(.data[[OUTCOME]]))
 message("Dropped ", n_before - nrow(wdi), " rows missing ", OUTCOME)
+
+# 4b. Flag statistical outliers -----------------------------------------------
+# Plausible but unusual values are flagged for the team to review, not removed:
+# a real shock (war, epidemic, disaster) looks just like a data error here.
+#   cross_section - beyond CROSS_SECTION_IQR_MULT x IQR from the quartiles of that year
+#   yoy_jump      - year-over-year change within a country beyond
+#                   YOY_IQR_MULT x IQR of all such changes for the indicator
+# Year-over-year changes are tightly bunched (life expectancy usually moves
+# < 0.5 years), so the jump fence is wider; at 3x it flags ordinary noise.
+# Skewed indicators are checked on the log scale.
+CROSS_SECTION_IQR_MULT <- 3
+YOY_IQR_MULT           <- 10
+LOG_SCALE <- c("gdp_pc", "population", "u5_mort")
+
+iqr_outlier <- function(x, mult) {
+  q <- quantile(x, c(0.25, 0.75), na.rm = TRUE)
+  fence <- mult * (q[2] - q[1])
+  !is.na(x) & (x < q[1] - fence | x > q[2] + fence)
+}
+
+outliers <- wdi %>%
+  select(country, iso3c, year, all_of(c(OUTCOME, ALL_FEATURES))) %>%
+  pivot_longer(all_of(c(OUTCOME, ALL_FEATURES)), names_to = "indicator", values_to = "value") %>%
+  filter(!is.na(value)) %>%
+  mutate(scaled = if_else(indicator %in% LOG_SCALE, log(value), value)) %>%
+  group_by(indicator, iso3c) %>%
+  arrange(year, .by_group = TRUE) %>%
+  # Change from the previous non-missing year, per year elapsed.
+  mutate(yoy_change = (scaled - lag(scaled)) / (year - lag(year))) %>%
+  group_by(indicator, year) %>%
+  mutate(cross_section = iqr_outlier(scaled, CROSS_SECTION_IQR_MULT)) %>%
+  group_by(indicator) %>%
+  mutate(yoy_jump = iqr_outlier(yoy_change, YOY_IQR_MULT)) %>%
+  ungroup() %>%
+  filter(cross_section | yoy_jump) %>%
+  mutate(flag = case_when(cross_section & yoy_jump ~ "both",
+                          cross_section ~ "cross_section",
+                          TRUE ~ "yoy_jump")) %>%
+  select(indicator, country, iso3c, year, value, yoy_change, flag) %>%
+  arrange(indicator, country, year)
+write_csv(outliers, file.path("output", "tables", "outliers_flagged.csv"))
+
+message("Outliers flagged for review (kept in the data):")
+print(count(outliers, indicator, flag) %>% pivot_wider(names_from = flag, values_from = n, values_fill = 0))
 
 # Steps 5-7 for one feature set ------------------------------------------------
 clean_variant <- function(wdi, features, variant) {

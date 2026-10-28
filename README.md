@@ -35,7 +35,9 @@ The 30% missingness rule drops many countries because enrollment data is patchy,
 
 ### Which one to use
 
-**Use `wdi_clean.rds` (secondary enrollment) for all primary modeling.** The other two are robustness checks.
+> **Decision (2026-10-28): the team's dataset is `wdi_clean.rds` (secondary enrollment).** Use it for all modeling, evaluation and figures. The other two are robustness checks only.
+
+Why:
 
 - **It answers the research question.** The question asks which economic, educational, health and demographic indicators matter, so the education feature has to measure something. Secondary enrollment correlates 0.81 with life expectancy; primary enrollment only 0.11, because most countries sit near 100% (interquartile range ≈ 92–110%). With primary enrollment, education would look unimportant because of the measure, not the relationship.
 - **It's what the proposal specified** (`SE.SEC.ENRR`), and the sample is not skewed by income: it keeps roughly half of each income group (see `variant_summary.csv`).

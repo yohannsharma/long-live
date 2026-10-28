@@ -2,6 +2,8 @@
 
 CPTS 475 final project — Team Long Live Humanity.
 
+See [Project-Progress.md](Project-Progress.md) for what's done and what's left.
+
 ## Setup
 
 Open `Long-Live-Humanity.Rproj` in RStudio (this sets the working directory to the project root), then install packages once:

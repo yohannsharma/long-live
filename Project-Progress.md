@@ -48,7 +48,7 @@ Per the proposal:
 
 ### Feature engineering and splits (Week 2)
 
-- [ ] Year as a feature; region and income group as categories
+- [x] Year as a feature; region and income group as categories — `R/04_features.R`
 - [ ] GDP × education interaction (lags optional)
 - [ ] Standardize features (needed for ridge, lasso and elastic net)
 - [ ] Time-based split: train on 2000–2014, test on 2015–2019

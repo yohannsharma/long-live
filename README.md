@@ -20,8 +20,11 @@ Run the scripts in order from the project root:
 |---|---|---|
 | `R/01_download_wdi.R` | Downloads life expectancy + 5 predictors (incl. primary enrollment as a fallback) for all countries, 2000–2019, with region/income metadata. Skips if the raw file exists (set `FORCE_DOWNLOAD <- TRUE` to refresh). | `data/raw/wdi_raw.csv` |
 | `R/02_clean_wdi.R` | Removes aggregates, reports missingness, nulls implausible values, drops rows missing the outcome, flags statistical outliers for review, drops countries with >30% of any feature missing, interpolates gaps of ≤3 years, keeps complete cases, adds `log_gdp_pc` / `log_pop`. Builds three dataset variants (below). | `data/processed/wdi_clean*.{csv,rds}`, `output/tables/*.csv` |
+| `R/04_features.R` | Adds model features to each variant: `year` as numeric, `region` / `income` as factors with fixed levels, and matching dummy columns (`region_*`, `income_*`). Reference levels: East Asia & Pacific, Low income. Saves `feature_spec.rds` listing columns by role. | `data/processed/wdi_features*.{csv,rds}`, `data/processed/feature_spec.rds` |
 
-Downstream scripts should load the `.rds` files (they keep `region` and `income` as factors).
+Downstream scripts should load the `.rds` files (they keep `region` and `income` as factors). Modeling scripts should start from `wdi_features.rds`: formula models (`lm`, `rpart`, `ranger`) use the `region` / `income` factors, and matrix models (`glmnet`, `xgboost`, neural net) use the dummy columns. Both use the same reference levels, so results line up. `feature_spec.rds` holds the column names by role (`outcome`, `numeric`, `factors`, `dummies`).
+
+Income group is WDI's current classification, so it doesn't change within a country over 2000–2019. North America is only Canada in the main dataset (16 rows).
 
 ## Dataset variants
 

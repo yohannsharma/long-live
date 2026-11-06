@@ -13,8 +13,8 @@
 # Note: WDI's income group is the *current* classification, so it is constant
 # within a country across 2000-2019 rather than the group in each year.
 #
-# Input:  data/processed/wdi_clean{,_prim,_noedu}.rds  (from 02_clean_wdi.R)
-# Output: data/processed/wdi_features{,_prim,_noedu}.{csv,rds}
+# Input:  data/processed/wdi_clean{,_prim,_noedu,_gap7,_usa}.rds  (from 02_clean_wdi.R)
+# Output: data/processed/wdi_features{,_prim,_noedu,_gap7,_usa}.{csv,rds}
 #         data/processed/feature_spec.rds  (column names by role, for later scripts)
 # Run from the project root (open Long-Live-Humanity.Rproj in RStudio).
 
@@ -61,7 +61,7 @@ build_features <- function(clean) {
   bind_cols(features, as_tibble(dummies))
 }
 
-VARIANT_SUFFIXES <- c(main = "", prim = "_prim", noedu = "_noedu")
+VARIANT_SUFFIXES <- c(main = "", prim = "_prim", noedu = "_noedu", gap7 = "_gap7", usa = "_usa")
 
 for (v in names(VARIANT_SUFFIXES)) {
   in_path <- file.path("data", "processed", paste0("wdi_clean", VARIANT_SUFFIXES[[v]], ".rds"))
@@ -75,7 +75,7 @@ for (v in names(VARIANT_SUFFIXES)) {
 
   message(v, ": ", nrow(features), " rows, ", ncol(features), " columns -> ", out_stem, ".rds")
   empty <- c(REGION_DUMMIES, INCOME_DUMMIES)[colSums(features[c(REGION_DUMMIES, INCOME_DUMMIES)]) == 0]
-  if (length(empty)) message("  Note: no rows for ", paste(empty, collapse = ", "))
+  if (length(empty) && v != "usa") message("  Note: no rows for ", paste(empty, collapse = ", "))
 }
 
 # Column names by role, so modeling scripts pick features the same way.

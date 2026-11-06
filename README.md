@@ -35,6 +35,10 @@ The 30% missingness rule drops many countries because enrollment data is patchy,
 | `wdi_clean.rds` (main) | secondary enrollment | 127 | 2,409 (1,828 / 581) |
 | `wdi_clean_prim.rds` | primary enrollment | 155 | 2,987 (2,250 / 737) |
 | `wdi_clean_noedu.rds` | none | 189 | 3,778 (2,834 / 944) |
+| `wdi_clean_gap7.rds` | secondary enrollment, gaps ≤ 7 years filled, 30% rule checked after filling | 147 | 2,769 (2,120 / 649) |
+| `wdi_clean_usa.rds` | US only, years with every feature reported (2005, 2013–2019) | 1 | 8 |
+
+`gap7` is a robustness check that brings back the US and 19 other countries; `usa` is for the US case study. Each has a matching `wdi_features_*.rds` from `R/04_features.R`. See the decision in [Project-Progress.md](Project-Progress.md#decision-2026-11-05-keep-the-main-dataset-handle-the-us-in-a-case-study-and-a-robustness-check).
 
 `output/tables/variant_summary.csv` breaks the retained countries down by income group; `countries_dropped.csv` lists every dropped country and the feature responsible.
 

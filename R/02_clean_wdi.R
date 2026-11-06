@@ -15,12 +15,21 @@
 #   main  - secondary enrollment (the proposal's primary specification)
 #   prim  - primary enrollment instead (better coverage; contingency plan)
 #   noedu - no education indicator (keeps the most countries)
+#   gap7  - same features as main, but secondary-enrollment gaps of up to 7
+#           years are filled and the 30% rule is checked *after* filling
+#           (robustness check: brings back the US and 19 other countries)
 # Comparing models across variants shows what the education choice costs.
+#
+# Also saved: the United States' rows with every main feature actually
+# observed (no filled values), for the US case study. The US is not in the
+# main dataset because secondary enrollment is missing 12 of 20 years.
 #
 # Input:  data/raw/wdi_raw.csv  (from 01_download_wdi.R)
 # Output: data/processed/wdi_clean.{csv,rds}        (main)
 #         data/processed/wdi_clean_prim.{csv,rds}
 #         data/processed/wdi_clean_noedu.{csv,rds}
+#         data/processed/wdi_clean_gap7.{csv,rds}
+#         data/processed/wdi_clean_usa.{csv,rds}    (US case study)
 #         output/tables/missingness_by_indicator_year.csv
 #         output/tables/countries_dropped.csv
 #         output/tables/variant_summary.csv
@@ -38,9 +47,15 @@ BASE_FEATURES <- c("gdp_pc", "u5_mort", "population")
 VARIANTS <- list(
   main  = c(BASE_FEATURES, "sec_enroll"),
   prim  = c(BASE_FEATURES, "prim_enroll"),
-  noedu = BASE_FEATURES
+  noedu = BASE_FEATURES,
+  gap7  = c(BASE_FEATURES, "sec_enroll")
 )
 ALL_FEATURES <- unique(unlist(VARIANTS))
+
+# Per-variant changes to the default gap-filling rules (see clean_variant()).
+VARIANT_OPTIONS <- list(
+  gap7 = list(gaps = c(sec_enroll = 7), measure_after_fill = TRUE)
+)
 
 MAX_COUNTRY_MISSING <- 0.30  # drop a country if any feature is missing in > 30% of its years
 MAX_INTERP_GAP      <- 3     # longest run of missing years to fill by linear interpolation
@@ -143,12 +158,31 @@ message("Outliers flagged for review (kept in the data):")
 print(count(outliers, indicator, flag) %>% pivot_wider(names_from = flag, values_from = n, values_fill = 0))
 
 # Steps 5-7 for one feature set ------------------------------------------------
-clean_variant <- function(wdi, features, variant) {
+# gaps: named vector overriding MAX_INTERP_GAP for specific features.
+# measure_after_fill: apply the 30% rule after interpolation instead of before.
+clean_variant <- function(wdi, features, variant, gaps = NULL, measure_after_fill = FALSE) {
   message("\n--- Variant '", variant, "': ", paste(features, collapse = ", "), " ---")
   wdi <- select(wdi, country, iso3c, year, region, income, all_of(c(OUTCOME, features)))
 
+  gap_for <- function(f) if (f %in% names(gaps)) gaps[[f]] else MAX_INTERP_GAP
+
+  # 6. Interpolate short gaps within each country.
+  # Interior gaps only (rule = 1): leading/trailing NAs are not extrapolated.
+  interpolate <- function(df) {
+    df %>%
+      group_by(iso3c) %>%
+      arrange(year, .by_group = TRUE) %>%
+      mutate(across(
+        all_of(features),
+        ~ if (sum(!is.na(.x)) >= 2) na.approx(.x, x = year, maxgap = gap_for(cur_column()), na.rm = FALSE, rule = 1) else .x
+      )) %>%
+      ungroup()
+  }
+
+  if (measure_after_fill) wdi <- interpolate(wdi)
+
   # 5. Drop countries with too much missing data.
-  # Measured before interpolation, so filled values don't hide sparse series.
+  # By default measured before interpolation, so filled values don't hide sparse series.
   dropped <- wdi %>%
     group_by(country, iso3c) %>%
     summarise(across(all_of(features), ~ mean(is.na(.x))), .groups = "drop") %>%
@@ -157,22 +191,14 @@ clean_variant <- function(wdi, features, variant) {
     mutate(variant = variant, .before = 1) %>%
     arrange(country, feature)
 
-  message("Countries dropped (> ", MAX_COUNTRY_MISSING * 100, "% missing): ",
+  message("Countries dropped (> ", MAX_COUNTRY_MISSING * 100, "% missing",
+          if (measure_after_fill) " after filling gaps" else "", "): ",
           n_distinct(dropped$iso3c), "; by feature responsible:")
   print(count(dropped, feature))
 
   wdi <- filter(wdi, !iso3c %in% dropped$iso3c)
 
-  # 6. Interpolate short gaps within each country.
-  # Interior gaps only (rule = 1): leading/trailing NAs are not extrapolated.
-  wdi <- wdi %>%
-    group_by(iso3c) %>%
-    arrange(year, .by_group = TRUE) %>%
-    mutate(across(
-      all_of(features),
-      ~ if (sum(!is.na(.x)) >= 2) na.approx(.x, x = year, maxgap = MAX_INTERP_GAP, na.rm = FALSE, rule = 1) else .x
-    )) %>%
-    ungroup()
+  if (!measure_after_fill) wdi <- interpolate(wdi)
 
   # 7. Complete cases + light feature prep.
   n_before <- nrow(wdi)
@@ -198,7 +224,27 @@ clean_variant <- function(wdi, features, variant) {
   list(clean = clean, dropped = dropped)
 }
 
-results <- setNames(Map(clean_variant, list(wdi), VARIANTS, names(VARIANTS)), names(VARIANTS))
+results <- setNames(lapply(names(VARIANTS), function(v) {
+  do.call(clean_variant, c(list(wdi = wdi, features = VARIANTS[[v]], variant = v), VARIANT_OPTIONS[[v]]))
+}), names(VARIANTS))
+
+# US case study ----------------------------------------------------------------
+# Only years where every main feature is actually reported (2005, 2013-2019):
+# no filled values, so predictions for the US test years (2015-2019) are clean.
+usa <- wdi %>%
+  filter(iso3c == "USA") %>%
+  select(country, iso3c, year, region, income, all_of(c(OUTCOME, VARIANTS$main))) %>%
+  drop_na(all_of(VARIANTS$main)) %>%
+  mutate(
+    log_gdp_pc = log(gdp_pc),
+    log_pop    = log(population),
+    region     = factor(region),
+    income     = factor(income, levels = c("Low income", "Lower middle income",
+                                           "Upper middle income", "High income"))
+  )
+write_csv(usa, file.path("data", "processed", "wdi_clean_usa.csv"))
+saveRDS(usa, file.path("data", "processed", "wdi_clean_usa.rds"))
+message("\nUS case study: ", nrow(usa), " observed years (", paste(usa$year, collapse = ", "), ")")
 
 write_csv(bind_rows(lapply(results, `[[`, "dropped")),
           file.path("output", "tables", "countries_dropped.csv"))

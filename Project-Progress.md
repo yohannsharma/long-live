@@ -40,7 +40,27 @@ The US has complete life expectancy, GDP, under-5 mortality and population data,
 
 **But the rule itself is reasonable** and shouldn't simply be loosened. Filling *every* interior gap would bring back 27 countries (127 → 154, including the US), but their gaps run up to 16 years (median 6), and it would also bring back the Central African Republic, whose data looks unreliable. China, Japan and Brazil would still be missing either way.
 
-**Open team decision:** keep the dataset as is (current plan; the baseline models are built on it), or allow longer gaps to be filled for secondary enrollment (e.g. up to 7 years) and re-run the cleaning. That would bring back the US and some others, but changes the dataset everyone is using, so decide before the Week 4 models.
+Raising the gap limit alone doesn't help either: the 30% rule is checked *before* gaps are filled, so the US would still be dropped. It only comes back if gaps of up to 7 years are filled **and** the rule is checked afterward, and that adds 20 countries, not just the US:
+
+| Option | Countries | Rows (train / test) | US? |
+|---|---|---|---|
+| Current rules (gap ≤ 3 years, 30% checked before filling) | 127 | 2,409 (1,828 / 581) | No |
+| Gap ≤ 7 years only | 127 | 2,430 | No |
+| 30% checked after filling (gap ≤ 3 years) | 134 | 2,518 | No |
+| Gap ≤ 7 years **and** 30% checked after filling | 147 | 2,769 (2,120 / 649) | Yes |
+
+The 20 extra countries include the Central African Republic (unreliable data), seven microstates (Monaco, San Marino, Palau, Marshall Islands, Nauru, Antigua and Barbuda, Vanuatu), and countries like Angola, Benin and Togo, where filling up to 7 years of enrollment with a straight line is mostly guesswork.
+
+### Decision (2026-11-05): keep the main dataset; handle the US in a case study and a robustness check
+
+| # | What | Status | Why |
+|---|---|---|---|
+| 1 | **Keep `wdi_clean.rds` / `wdi_features.rds` (127 countries) as the dataset for all main modeling.** | Done (unchanged) | The rule is applied the same way to every country, which is easy to defend. Making an exception just for the US would look like cherry-picking. The baseline models are already built on this dataset. |
+| 2 | **US case study data:** `data/processed/wdi_features_usa.rds`, the 8 US years where every feature is actually reported (2005, 2013–2019), with no filled values. Use it in the country case studies ([#28](https://github.com/yohannsharma/long-live/issues/28)): predict US life expectancy for 2015–2019 with the final model. | Data ready; analysis waits for the final model | Tests whether "rich country, lower life expectancy" fools the model, without any guessed enrollment values. Note the model's North America effect is learned from Canada only. |
+| 3 | **Robustness dataset:** `data/processed/wdi_features_gap7.rds` (147 countries, includes the US). Re-run the best models on it in the robustness checks ([#29](https://github.com/yohannsharma/long-live/issues/29)) and compare accuracy and feature importance with the main dataset. | Data ready; analysis waits for the final models | Shows whether the 30% rule changed the conclusions. If results barely move, the rule is vindicated; if they do, that's worth reporting. |
+| 4 | **State the coverage in the report** ([#30](https://github.com/yohannsharma/long-live/issues/30)), e.g.: *"Results cover 127 countries with sufficient data. Several large countries, including the United States, China, Japan and Brazil, are excluded because secondary enrollment is missing in more than 30% of years. The United States is examined separately as a case study, and a 147-country version with longer gap-filling is used as a robustness check."* | Wording ready; goes in the final report | Readers shouldn't assume results describe the whole world. |
+
+All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US file) and `R/04_features.R`.
 
 ## Done
 
@@ -85,7 +105,7 @@ The US has complete life expectancy, GDP, under-5 mortality and population data,
 ## After the check-in
 
 - [ ] **Week 4 (10/31–11/7):** decision tree, random forest, gradient boosting, XGBoost, neural network; hyperparameter tuning
-- [ ] **Week 5 (11/7–11/14):** model comparison, feature importance (permutation importance, SHAP), analysis across the four time windows, country case studies, robustness checks on `wdi_clean_prim.rds` and `wdi_clean_noedu.rds`
+- [ ] **Week 5 (11/7–11/14):** model comparison, feature importance (permutation importance, SHAP), analysis across the four time windows, country case studies (including the US, `wdi_features_usa.rds`), robustness checks on the `prim`, `noedu` and `gap7` datasets
 - [ ] **Week 6 (11/14–11/21):** report and slides, final figures, internal review
 - [ ] **Final presentation:** 12/7–12/14
 - [ ] **Final submission:** 12/18 (report, code, slides)

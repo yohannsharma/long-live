@@ -86,7 +86,7 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 ### Feature engineering and splits (Week 2)
 
 - [x] Year as a feature; region and income group as categories — `R/04_features.R`
-- [ ] GDP × education interaction (lags optional)
+- [x] GDP × education interaction (lags optional) — `R/04_features.R` (`log_gdp_x_sec_enroll`, `*_lag1`)
 - [ ] Standardize features (needed for ridge, lasso and elastic net)
 - [ ] Time-based split: train on 2000–2014, test on 2015–2019
 - [ ] Cross-validation folds grouped by country

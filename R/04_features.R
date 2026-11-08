@@ -1,8 +1,10 @@
 # 04_features.R
-# Build model features from the cleaned panels (issue #8):
-#   - year as a numeric feature
+# Build model features from the cleaned panels:
+#   - year as a numeric feature (issue #8)
 #   - region and income group as factors with fixed levels, plus matching
-#     dummy columns, so every model sees the same encoding
+#     dummy columns, so every model sees the same encoding (issue #8)
+#   - GDP x education interaction, log_gdp_x_sec_enroll (issue #9)
+#   - optional 1-year lags of the predictors, *_lag1 (issue #9)
 #
 # Formula-based models (lm, rpart, ranger) use the `region` / `income` factors.
 # Matrix-based models (glmnet, xgboost, neural net) use the dummy columns.
@@ -39,6 +41,11 @@ slug <- function(x) gsub("^_|_$", "", gsub("[^a-z0-9]+", "_", tolower(x)))
 REGION_DUMMIES <- paste0("region_", slug(REGION_LEVELS[-1]))
 INCOME_DUMMIES <- paste0("income_", slug(INCOME_LEVELS[-1]))
 
+# Predictors that get a 1-year lag. The education column is whichever the
+# dataset has (sec_enroll, or prim_enroll in the prim variant).
+LAG_BASE <- c("log_gdp_pc", "u5_mort", "log_pop")
+EDU_COLS <- c("sec_enroll", "prim_enroll")
+
 build_features <- function(clean) {
   unknown_region <- setdiff(unique(as.character(clean$region)), REGION_LEVELS)
   unknown_income <- setdiff(unique(as.character(clean$income)), INCOME_LEVELS)
@@ -57,8 +64,27 @@ build_features <- function(clean) {
   # Dummy columns from the same factors, dropping the reference level.
   dummies <- model.matrix(~ region + income, data = features)[, -1, drop = FALSE]
   colnames(dummies) <- c(REGION_DUMMIES, INCOME_DUMMIES)
+  features <- bind_cols(features, as_tibble(dummies))
 
-  bind_cols(features, as_tibble(dummies))
+  # GDP x education interaction, from the unscaled columns (standardizing,
+  # issue #10, happens later). The noedu variant has no education column.
+  edu <- intersect(EDU_COLS, names(features))
+  if (length(edu) == 1) {
+    features[[paste0("log_gdp_x_", edu)]] <- features$log_gdp_pc * features[[edu]]
+  }
+
+  # 1-year lags within each country. A lag is the value from exactly year - 1
+  # in the same country, so it is NA in a country's first year and after a
+  # missing year (rows dropped in cleaning), never a value from another country
+  # or from further back. Lags only look backward, so a training row
+  # (2000-2014) never sees a test-period (2015-2019) value; a 2015 test row
+  # uses 2014, which is known at prediction time.
+  lag_cols <- c(LAG_BASE, edu)
+  lagged <- features %>%
+    select(iso3c, year, all_of(lag_cols)) %>%
+    mutate(year = year + 1) %>%
+    rename_with(~ paste0(.x, "_lag1"), all_of(lag_cols))
+  left_join(features, lagged, by = c("iso3c", "year"))
 }
 
 VARIANT_SUFFIXES <- c(main = "", prim = "_prim", noedu = "_noedu", gap7 = "_gap7", usa = "_usa")
@@ -86,6 +112,9 @@ feature_spec <- list(
   numeric        = c("year", "log_gdp_pc", "u5_mort", "log_pop", "sec_enroll"),
   factors        = c("region", "income"),
   dummies        = c(REGION_DUMMIES, INCOME_DUMMIES),
+  interaction    = "log_gdp_x_sec_enroll",
+  # Optional; NA in each country's first year, so models using them lose those rows.
+  lags           = paste0(c(LAG_BASE, "sec_enroll"), "_lag1"),
   region_levels  = REGION_LEVELS,
   income_levels  = INCOME_LEVELS
 )

@@ -89,7 +89,7 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 - [x] GDP × education interaction (lags optional) — `R/04_features.R` (`log_gdp_x_sec_enroll`, `*_lag1`)
 - [x] Standardize features (needed for ridge, lasso and elastic net) — `R/05_split_scale.R` (training-set means/SDs only)
 - [x] Time-based split: train on 2000–2014, test on 2015–2019 — `R/05_split_scale.R` → `data/processed/model_data.rds` (1,828 / 581)
-- [ ] Cross-validation folds grouped by country
+- [x] Cross-validation folds grouped by country — `R/05_split_scale.R` → `md$fold_id` (5 folds, seed 475)
 
 ### Baseline models (Week 3, 10/24–10/31)
 

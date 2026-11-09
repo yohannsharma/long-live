@@ -1,7 +1,17 @@
 # 05_split_scale.R
-# Split each feature dataset by year and standardize numeric features (issue #10).
+# Split each feature dataset by year (issue #11), standardize numeric features
+# (issue #10), and assign country-grouped cross-validation folds (issue #12).
 #
 #   Train: 2000-2014    Test: 2015-2019
+#
+# CV folds: the TRAINING countries are split into CV_K folds so that all of a
+# country's years are in the same fold. Validating on countries the model
+# never saw stops it from "remembering" a country through its neighbouring
+# years. Countries are shuffled with a fixed seed and dealt out one income group
+# at a time, each to the fold with the fewest rows of that income group (ties:
+# fewest rows overall). That keeps fold sizes even and every fold's income mix
+# close to the full sample's. Each dataset gets its own folds (they contain
+# different countries).
 #
 # Standardizing (z = (x - mean) / sd) uses means and SDs from the TRAINING rows
 # only; the same parameters are then applied to the test rows, so nothing about
@@ -23,13 +33,22 @@
 #           train, test               unscaled (tree models, lm)
 #           train_scaled, test_scaled standardized (glmnet, neural net)
 #           scaler                    tibble: column, mean, sd (from train)
+#           folds                     tibble: iso3c, country, fold (training countries)
+#           fold_id                   integer fold for each row of train / train_scaled
 #         model_data.rds also has usa / usa_scaled: the US case-study rows,
 #         scaled with the MAIN training parameters.
 #         output/tables/scaling_params.csv  (all variants)
+#         output/tables/cv_folds.csv        (all variants)
 #
 # Usage in a model script:
 #   md <- readRDS("data/processed/model_data.rds")
 #   fit <- lm(life_exp ~ ..., data = md$train); predict(fit, md$test)
+#   cv.glmnet(x, y, foldid = md$fold_id)   # x built from md$train_scaled
+#   for (k in 1:5) { tr <- md$train[md$fold_id != k, ]; va <- md$train[md$fold_id == k, ] }
+#
+# Note: train_scaled uses parameters from the whole training set, so inside CV
+# the validation fold has influenced the scaling slightly. That is standard for
+# tuning; glmnet also re-standardizes internally by default.
 # Run from the project root (open Long-Live-Humanity.Rproj in RStudio).
 
 library(dplyr)
@@ -39,6 +58,9 @@ TRAIN_YEARS <- 2000:2014
 TEST_YEARS  <- 2015:2019
 
 EDU_COLS <- c("sec_enroll", "prim_enroll")
+
+CV_K    <- 5
+CV_SEED <- 475
 
 split_by_year <- function(df) {
   list(train = filter(df, year %in% TRAIN_YEARS),
@@ -91,8 +113,30 @@ scale_split <- function(train, test) {
        interaction_scaler = if (length(edu) == 1) ix_scaler else NULL)
 }
 
+# Assign training countries to folds, stratified by income group: shuffle
+# (seeded), then give each country to the fold with the fewest rows of its
+# income group so far, breaking ties by fewest rows overall.
+make_country_folds <- function(train, k = CV_K, seed = CV_SEED) {
+  countries <- count(train, iso3c, country, income, name = "rows")
+  set.seed(seed)
+  countries <- countries[sample(nrow(countries)), ]
+  countries <- countries[order(countries$income), ]  # stable: shuffle kept within group
+  fold_rows   <- integer(k)
+  income_rows <- matrix(0L, nrow = nlevels(train$income), ncol = k)
+  countries$fold <- NA_integer_
+  for (i in seq_len(nrow(countries))) {
+    g <- as.integer(countries$income[i])
+    f <- order(income_rows[g, ], fold_rows)[1]
+    countries$fold[i] <- f
+    fold_rows[f]      <- fold_rows[f] + countries$rows[i]
+    income_rows[g, f] <- income_rows[g, f] + countries$rows[i]
+  }
+  arrange(countries, fold, country)
+}
+
 VARIANT_SUFFIXES <- c(main = "", prim = "_prim", noedu = "_noedu", gap7 = "_gap7")
 all_params <- list()
+all_folds  <- list()
 
 for (v in names(VARIANT_SUFFIXES)) {
   in_path <- file.path("data", "processed", paste0("wdi_features", VARIANT_SUFFIXES[[v]], ".rds"))
@@ -103,6 +147,11 @@ for (v in names(VARIANT_SUFFIXES)) {
   md <- list(train = sp$train, test = sp$test,
              train_scaled = sc$train_scaled, test_scaled = sc$test_scaled,
              scaler = sc$scaler)
+
+  folds <- make_country_folds(sp$train)
+  md$folds   <- select(folds, iso3c, country, fold)
+  md$fold_id <- folds$fold[match(sp$train$iso3c, folds$iso3c)]
+  all_folds[[v]] <- mutate(folds, variant = v, .before = 1)
 
   # US case study: scaled with the main training parameters, like any test row.
   if (v == "main") {
@@ -118,8 +167,13 @@ for (v in names(VARIANT_SUFFIXES)) {
   saveRDS(md, file.path("data", "processed", paste0("model_data", VARIANT_SUFFIXES[[v]], ".rds")))
   all_params[[v]] <- mutate(sc$scaler, variant = v, .before = 1)
   message(v, ": train ", nrow(md$train), " / test ", nrow(md$test), " rows; ",
-          nrow(sc$scaler), " columns standardized -> model_data", VARIANT_SUFFIXES[[v]], ".rds")
+          nrow(sc$scaler), " columns standardized; ", CV_K, " CV folds of ",
+          paste(tabulate(md$fold_id, CV_K), collapse = "/"), " rows -> model_data",
+          VARIANT_SUFFIXES[[v]], ".rds")
 }
+
+write_csv(bind_rows(all_folds), file.path("output", "tables", "cv_folds.csv"))
+message("Saved output/tables/cv_folds.csv")
 
 dir.create(file.path("output", "tables"), recursive = TRUE, showWarnings = FALSE)
 write_csv(bind_rows(all_params), file.path("output", "tables", "scaling_params.csv"))

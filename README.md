@@ -21,7 +21,7 @@ Run the scripts in order from the project root:
 | `R/01_download_wdi.R` | Downloads life expectancy + 5 predictors (incl. primary enrollment as a fallback) for all countries, 2000–2019, with region/income metadata. Skips if the raw file exists (set `FORCE_DOWNLOAD <- TRUE` to refresh). | `data/raw/wdi_raw.csv` |
 | `R/02_clean_wdi.R` | Removes aggregates, reports missingness, nulls implausible values, drops rows missing the outcome, flags statistical outliers for review, drops countries with >30% of any feature missing, interpolates gaps of ≤3 years, keeps complete cases, adds `log_gdp_pc` / `log_pop`. Builds three dataset variants (below). | `data/processed/wdi_clean*.{csv,rds}`, `output/tables/*.csv` |
 | `R/04_features.R` | Adds model features to each variant: `year` as numeric, `region` / `income` as factors with fixed levels, and matching dummy columns (`region_*`, `income_*`). Reference levels: East Asia & Pacific, Low income. Adds the GDP × education interaction `log_gdp_x_sec_enroll` (`log_gdp_x_prim_enroll` in `prim`) and optional 1-year lags (`*_lag1`, same country, exactly the previous year; NA in a country's first year). Saves `feature_spec.rds` listing columns by role. | `data/processed/wdi_features*.{csv,rds}`, `data/processed/feature_spec.rds` |
-| `R/05_split_scale.R` | Splits by year (train 2000–2014, test 2015–2019) and standardizes numeric features with means/SDs from the **training rows only**, applied unchanged to the test rows. Keeps unscaled copies for tree models. In the scaled data the interaction is rebuilt from the standardized GDP and education columns. The US case-study rows are scaled with the main training parameters. | `data/processed/model_data*.rds`, `output/tables/scaling_params.csv` |
+| `R/05_split_scale.R` | Splits by year (train 2000–2014, test 2015–2019), assigns 5 cross-validation folds grouped by country (training countries only), and standardizes numeric features with means/SDs from the **training rows only**, applied unchanged to the test rows. Keeps unscaled copies for tree models. In the scaled data the interaction is rebuilt from the standardized GDP and education columns. The US case-study rows are scaled with the main training parameters. | `data/processed/model_data*.rds`, `output/tables/scaling_params.csv` |
 
 Downstream scripts should load the `.rds` files (they keep `region` and `income` as factors). Modeling scripts should start from `wdi_features.rds`: formula models (`lm`, `rpart`, `ranger`) use the `region` / `income` factors, and matrix models (`glmnet`, `xgboost`, neural net) use the dummy columns. Both use the same reference levels, so results line up. `feature_spec.rds` holds the column names by role (`outcome`, `numeric`, `factors`, `dummies`).
 
@@ -32,8 +32,12 @@ md <- readRDS("data/processed/model_data.rds")
 md$train, md$test                # unscaled: lm, rpart, ranger, gbm, xgboost
 md$train_scaled, md$test_scaled  # standardized: ridge / lasso / elastic net, neural net
 md$scaler                        # mean and sd used for each column (from train)
+md$fold_id                       # CV fold (1-5) for each row of md$train, grouped by country
+md$folds                         # which training country is in which fold
 md$usa, md$usa_scaled            # US case-study rows (2005, 2013-2019)
 ```
+
+For tuning, use the saved folds rather than making new ones, e.g. `cv.glmnet(x, y, foldid = md$fold_id)`, or loop `k in 1:5` with `md$train[md$fold_id != k, ]` as training and `md$train[md$fold_id == k, ]` as validation. All of a country's years are in one fold, so validation is always on unseen countries. Folds are built from training countries only, balanced by row count and income group, with a fixed seed (475); the assignments are also in `output/tables/cv_folds.csv`.
 
 `life_exp` is never scaled, so errors stay in years. Dummy columns stay 0/1. Lag columns are NA in each country's first year; drop those rows (or the lag columns) in models that can't handle NA.
 

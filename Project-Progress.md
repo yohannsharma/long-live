@@ -13,9 +13,9 @@ Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/
 | **Michael** (@Erouy) | [#3](https://github.com/yohannsharma/long-live/issues/3), [#4](https://github.com/yohannsharma/long-live/issues/4), [#5](https://github.com/yohannsharma/long-live/issues/5), [#6](https://github.com/yohannsharma/long-live/issues/6), [#7](https://github.com/yohannsharma/long-live/issues/7) | EDA figures and written interpretations |
 | **Yohann** (@yohannsharma) | [#8](https://github.com/yohannsharma/long-live/issues/8), [#9](https://github.com/yohannsharma/long-live/issues/9), [#10](https://github.com/yohannsharma/long-live/issues/10), [#11](https://github.com/yohannsharma/long-live/issues/11), [#12](https://github.com/yohannsharma/long-live/issues/12) | Features, standardizing, time split, CV folds |
 | **Josh** (@JoshABurk) | [#13](https://github.com/yohannsharma/long-live/issues/13), [#14](https://github.com/yohannsharma/long-live/issues/14), [#15](https://github.com/yohannsharma/long-live/issues/15), [#16](https://github.com/yohannsharma/long-live/issues/16) | Metrics helper and baseline models |
-| **Aiden** | [#1](https://github.com/yohannsharma/long-live/issues/1), [#2](https://github.com/yohannsharma/long-live/issues/2), [#17](https://github.com/yohannsharma/long-live/issues/17), [#18](https://github.com/yohannsharma/long-live/issues/18) | Summary stats, missingness heatmap, results table, check-in write-up |
+| **Aiden** (@AidenBoyer) | [#1](https://github.com/yohannsharma/long-live/issues/1), [#2](https://github.com/yohannsharma/long-live/issues/2), [#17](https://github.com/yohannsharma/long-live/issues/17), [#18](https://github.com/yohannsharma/long-live/issues/18) | Summary stats, missingness heatmap, results table, check-in write-up |
 
-Aiden isn't on the repo yet, so his issues are unassigned on GitHub until he joins. Week 4 and later issues aren't assigned yet.
+Week 4 and later issues aren't assigned yet.
 
 ## Midpoint check-in requirements (November 4)
 
@@ -81,7 +81,7 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 - [ ] Correlation matrix
 - [ ] Scatterplots of each predictor vs. life expectancy
 - [ ] Life expectancy trends by region and income group
-- [ ] **At least 2 polished figures with written interpretations** (check-in requirement)
+- [ ] **At least 2 polished figures with written interpretations** (check-in requirement) — drafted in [EDA-Findings.md](EDA-Findings.md); scripts `R/03_eda_*.R`, awaiting hand-tests
 
 ### Feature engineering and splits (Week 2)
 

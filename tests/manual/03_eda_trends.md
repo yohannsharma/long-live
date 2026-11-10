@@ -17,14 +17,14 @@ source("R/03_eda_trends.R")
 
 | Group | 2000 | 2019 | Change |
 |---|---|---|---|
-| High income (50) | 75.7 | 80.0 | +4.3 |
+| High income (50) | 75.7 | 80.0 | +4.2 |
 | Upper middle income (38) | 70.3 | 74.1 | +3.8 |
 | Lower middle income (27) | 61.4 | 68.3 | +6.9 |
-| Low income (12) | 52.1 | 62.8 | +10.7 |
+| Low income (12) | 52.1 | 62.8 | +10.6 |
 | Europe & Central Asia (43) | 74.5 | 79.1 | +4.6 |
-| Middle East, North Africa, Afghanistan & Pakistan (16) | 71.1 | 76.3 | +5.2 |
+| Middle East, North Africa, Afghanistan & Pakistan (16) | 71.1 | 76.3 | +5.1 |
 | Latin America & Caribbean (26) | 71.3 | 74.3 | +3.0 |
-| South Asia (5) | 64.0 | 72.9 | +8.9 |
+| South Asia (5) | 64.0 | 72.9 | +8.8 |
 | East Asia & Pacific (13) | 68.5 | 72.6 | +4.1 |
 | Sub-Saharan Africa (23) | 54.7 | 63.9 | +9.2 |
 | North America (Canada only) | 79.2 | 82.2 | +3.0 |

@@ -9,8 +9,10 @@ See [Project-Progress.md](Project-Progress.md) for what's done and what's left.
 Open `Long-Live-Humanity.Rproj` in RStudio (this sets the working directory to the project root), then install packages once:
 
 ```r
-install.packages(c("WDI", "dplyr", "tidyr", "zoo", "readr"))
+install.packages(c("WDI", "dplyr", "tidyr", "zoo", "readr", "ggplot2", "scales", "patchwork"))
 ```
+
+The EDA scripts need ggplot2 ≥ 3.4.0 and scales ≥ 1.2.0 (check with `packageVersion("ggplot2")` and `packageVersion("scales")`).
 
 ## Pipeline
 
@@ -20,8 +22,14 @@ Run the scripts in order from the project root:
 |---|---|---|
 | `R/01_download_wdi.R` | Downloads life expectancy + 5 predictors (incl. primary enrollment as a fallback) for all countries, 2000–2019, with region/income metadata. Skips if the raw file exists (set `FORCE_DOWNLOAD <- TRUE` to refresh). | `data/raw/wdi_raw.csv` |
 | `R/02_clean_wdi.R` | Removes aggregates, reports missingness, nulls implausible values, drops rows missing the outcome, flags statistical outliers for review, drops countries with >30% of any feature missing, interpolates gaps of ≤3 years, keeps complete cases, adds `log_gdp_pc` / `log_pop`. Builds three dataset variants (below). | `data/processed/wdi_clean*.{csv,rds}`, `output/tables/*.csv` |
+| `R/03_eda_histograms.R` | Histograms of each variable in the main dataset (log-scale versions for GDP per capita and population), with the median marked, plus a combined panel. Prints skewness. | `output/figures/hist_*.png` |
+| `R/03_eda_correlation.R` | Pearson correlation matrix of life expectancy and the numeric predictors (log GDP and population), plus the Spearman matrix. | `output/figures/correlation_matrix.png`, `output/tables/correlation_matrix{,_spearman}.csv` |
+| `R/03_eda_scatter.R` | Each predictor against life expectancy, coloured by income group, with a loess smoother; one combined panel and one file per predictor. | `output/figures/scatter_*.png` |
+| `R/03_eda_trends.R` | Mean life expectancy per year by income group and by region, for the same 127 countries every year (life expectancy taken from the raw file; see the script header). | `output/figures/life_exp_trend*.png`, `output/tables/life_exp_trends.csv` |
 | `R/04_features.R` | Adds model features to each variant: `year` as numeric, `region` / `income` as factors with fixed levels, and matching dummy columns (`region_*`, `income_*`). Reference levels: East Asia & Pacific, Low income. Adds the GDP × education interaction `log_gdp_x_sec_enroll` (`log_gdp_x_prim_enroll` in `prim`) and optional 1-year lags (`*_lag1`, same country, exactly the previous year; NA in a country's first year). Saves `feature_spec.rds` listing columns by role. | `data/processed/wdi_features*.{csv,rds}`, `data/processed/feature_spec.rds` |
 | `R/05_split_scale.R` | Splits by year (train 2000–2014, test 2015–2019), assigns 5 cross-validation folds grouped by country (training countries only), and standardizes numeric features with means/SDs from the **training rows only**, applied unchanged to the test rows. Keeps unscaled copies for tree models. In the scaled data the interaction is rebuilt from the standardized GDP and education columns. The US case-study rows are scaled with the main training parameters. | `data/processed/model_data*.rds`, `output/tables/scaling_params.csv` |
+
+What the EDA figures show is written up in [EDA-Findings.md](EDA-Findings.md). Each `R/03_eda_*.R` script has a hand-test checklist in `tests/manual/`.
 
 Downstream scripts should load the `.rds` files (they keep `region` and `income` as factors). Modeling scripts should start from `wdi_features.rds`: formula models (`lm`, `rpart`, `ranger`) use the `region` / `income` factors, and matrix models (`glmnet`, `xgboost`, neural net) use the dummy columns. Both use the same reference levels, so results line up. `feature_spec.rds` holds the column names by role (`outcome`, `numeric`, `factors`, `dummies`).
 
@@ -87,6 +95,7 @@ Most life-expectancy jumps are real events: Haiti 2010 (earthquake), Myanmar 200
 
 ```
 R/                 analysis scripts, numbered in run order
+tests/manual/      hand-test checklists for scripts
 data/raw/          untouched API download
 data/processed/    cleaned modeling dataset
 output/figures/    ggplot2 figures

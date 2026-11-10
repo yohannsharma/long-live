@@ -11,13 +11,13 @@ Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/
 - **Closed: 10 of 32 issues** (#3–#12), plus 2 merged pull requests (#33, #34).
 - **Data, features, splits and EDA are done.** Model scripts can start from `data/processed/model_data.rds` (see the README).
 - **Next:** the baseline models and check-in write-up (#13–#18), and the two EDA summary items (#1, #2).
-- **Open follow-ups from PR #34** (merged before these were fixed): see [below](#follow-ups-from-pr-34).
+- **Follow-ups from PR #34 are fixed in this update:** EDA figures and tables committed, four trend values corrected (see [below](#follow-ups-from-pr-34)).
 
 ## Who's doing what (midpoint check-in)
 
 | Who | Issues | Workstream | Status |
 |---|---|---|---|
-| **Michael** (@Erouy) | [#3](https://github.com/yohannsharma/long-live/issues/3), [#4](https://github.com/yohannsharma/long-live/issues/4), [#5](https://github.com/yohannsharma/long-live/issues/5), [#6](https://github.com/yohannsharma/long-live/issues/6), [#7](https://github.com/yohannsharma/long-live/issues/7) | EDA figures and written interpretations | **All closed** (PR #34); follow-ups open |
+| **Michael** (@Erouy) | [#3](https://github.com/yohannsharma/long-live/issues/3), [#4](https://github.com/yohannsharma/long-live/issues/4), [#5](https://github.com/yohannsharma/long-live/issues/5), [#6](https://github.com/yohannsharma/long-live/issues/6), [#7](https://github.com/yohannsharma/long-live/issues/7) | EDA figures and written interpretations | **All closed** (PR #34); follow-ups fixed |
 | **Yohann** (@yohannsharma) | [#8](https://github.com/yohannsharma/long-live/issues/8), [#9](https://github.com/yohannsharma/long-live/issues/9), [#10](https://github.com/yohannsharma/long-live/issues/10), [#11](https://github.com/yohannsharma/long-live/issues/11), [#12](https://github.com/yohannsharma/long-live/issues/12) | Features, standardizing, time split, CV folds | **All closed** |
 | **Josh** (@JoshABurk) | [#13](https://github.com/yohannsharma/long-live/issues/13), [#14](https://github.com/yohannsharma/long-live/issues/14), [#15](https://github.com/yohannsharma/long-live/issues/15), [#16](https://github.com/yohannsharma/long-live/issues/16) | Metrics helper and baseline models | Open |
 | **Aiden** (@AidenBoyer) | [#1](https://github.com/yohannsharma/long-live/issues/1), [#2](https://github.com/yohannsharma/long-live/issues/2), [#17](https://github.com/yohannsharma/long-live/issues/17), [#18](https://github.com/yohannsharma/long-live/issues/18) | Summary stats, missingness heatmap, results table, check-in write-up | Open |
@@ -29,7 +29,7 @@ Week 4 and later issues (#19–#32) aren't assigned yet.
 Per the proposal:
 
 - [x] Cleaned data
-- [x] EDA figures — **at least 2 meaningful visualizations, each with a written interpretation**: three figures written up in [EDA-Findings.md](EDA-Findings.md). The PNGs still need to be generated and committed (follow-up 1 below).
+- [x] EDA figures — **at least 2 meaningful visualizations, each with a written interpretation**: three figures written up in [EDA-Findings.md](EDA-Findings.md), with the PNGs in `output/figures/`.
 - [ ] Baseline results — **at least 3 models, methods, or configurations tested** (#13–#17)
 
 ## Closed issues
@@ -51,11 +51,12 @@ Merged pull requests: [#33](https://github.com/yohannsharma/long-live/pull/33) (
 
 ## Follow-ups from PR #34
 
-PR #34 was merged before the fixes from its [review](https://github.com/yohannsharma/long-live/pull/34#pullrequestreview-5822715111) went in. Still to do on `main`:
+PR #34 was merged before the fixes from its [review](https://github.com/yohannsharma/long-live/pull/34#pullrequestreview-5822715111) went in. They're fixed in commit 22802e6 (part of this update):
 
-1. [ ] **Generate and commit the EDA outputs.** `output/figures/*.png` and the EDA tables (`correlation_matrix*.csv`, `life_exp_trends.csv`) aren't in the repo, so the images in `EDA-Findings.md` are broken. Run the four `R/03_eda_*.R` scripts and commit `output/`.
-2. [ ] **Fix four life-expectancy changes that are 0.1 too high.** The script prints the right values; the docs use the difference of rounded numbers. Correct values: High income **+4.2**, Low income **+10.6**, Middle East, North Africa, Afghanistan & Pakistan **+5.1**, South Asia **+8.8**. In `EDA-Findings.md` (Figure 2 paragraph) and `tests/manual/03_eda_trends.md` (lines 20, 23, 25, 27).
-3. [ ] *Optional:* "The high-income mean dipped once, in 2015" (`EDA-Findings.md`) — the dip is −0.006 years; "levelled off" is more accurate. `hist_all.png` shows raw population in scientific notation. The under-5 mortality smoother curls up above ~200 deaths per 1,000 where there are only a few points.
+1. [x] **Generate and commit the EDA outputs.** Ran the four `R/03_eda_*.R` scripts (no errors or warnings) and committed the 18 PNGs in `output/figures/` and the EDA tables (`correlation_matrix.csv`, `correlation_matrix_spearman.csv`, `life_exp_trends.csv`). The images in `EDA-Findings.md` now display. **Why:** the findings doc embeds these files, so without them the check-in figures were broken images.
+2. [x] **Fix four life-expectancy changes that were 0.1 too high.** Now High income **+4.2**, Low income **+10.6**, Middle East, North Africa, Afghanistan & Pakistan **+5.1**, South Asia **+8.8**, in `EDA-Findings.md` and `tests/manual/03_eda_trends.md`. **Why:** the script computes the change before rounding (correct), but the docs subtracted the rounded values; all 11 rows of the hand-test now match the script's output.
+3. [x] *Optional wording:* "the high-income mean dipped once, in 2015" now reads "levelled off in 2015 (a dip of under 0.01 years)". **Why:** the dip is −0.006 years, about 2 days.
+4. [ ] *Optional, not done:* `hist_all.png` shows raw population in scientific notation, and the under-5 mortality smoother curls up above ~200 deaths per 1,000 where there are only a few points. Cosmetic only.
 
 ## Things the team should know about the data
 
@@ -113,7 +114,7 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 - [x] Correlation matrix — `R/03_eda_correlation.R` (#4)
 - [x] Scatterplots of each predictor vs. life expectancy — `R/03_eda_scatter.R` (#5)
 - [x] Life expectancy trends by region and income group — `R/03_eda_trends.R` (#6)
-- [x] **At least 2 polished figures with written interpretations** (check-in requirement) — [EDA-Findings.md](EDA-Findings.md) (#7); see follow-ups above
+- [x] **At least 2 polished figures with written interpretations** (check-in requirement) — [EDA-Findings.md](EDA-Findings.md) (#7); figures in `output/figures/`
 
 ### Feature engineering and splits (Week 2)
 

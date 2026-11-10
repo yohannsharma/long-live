@@ -5,13 +5,13 @@ library(glmnet)
 source("R/06_evaluate.R")
 
 # --------------------------------------------------
-# 1. Load prepared dataset
+# 1. Load prepared standardized dataset
 # --------------------------------------------------
 
 model_data <- readRDS("data/processed/model_data.rds")
 
-train <- model_data$train
-test <- model_data$test
+train <- model_data$train_scaled
+test <- model_data$test_scaled
 fold_id <- model_data$fold_id
 
 predictors <- c(
@@ -32,7 +32,10 @@ stopifnot(length(fold_id) == nrow(train))
 # --------------------------------------------------
 
 valid_rows <- function(df) {
-  values <- as.matrix(df[, required_cols, drop = FALSE])
+  values <- as.matrix(
+    df[, required_cols, drop = FALSE]
+  )
+
   rowSums(!is.finite(values)) == 0
 }
 
@@ -47,7 +50,7 @@ stopifnot(nrow(train) > 0, nrow(test) > 0)
 stopifnot(!anyNA(fold_id))
 stopifnot(length(unique(fold_id)) == 5)
 
-# Verify that each country belongs to only one fold
+# Verify each country belongs to only one fold
 country_folds <- tapply(
   fold_id,
   train$iso3c,
@@ -60,7 +63,7 @@ cat("Training rows:", nrow(train), "\n")
 cat("Testing rows:", nrow(test), "\n")
 
 # --------------------------------------------------
-# 3. Prepare predictor matrices
+# 3. Prepare standardized predictor matrices
 # --------------------------------------------------
 
 x_train <- as.matrix(
@@ -75,18 +78,20 @@ x_test <- as.matrix(
 
 y_test <- test$life_exp
 
-# glmnet standardizes predictors using the
-# training observations for each fit.
-# This avoids leakage from validation/test data.
+# The predictors have already been standardized
+# using the team's training-set scaling parameters.
+# Therefore, glmnet standardization is disabled.
 
+# Keep existing country-grouped fold assignments
 fold_id <- as.integer(factor(fold_id))
 
 # --------------------------------------------------
 # 4. Define alpha and lambda search
 # --------------------------------------------------
 
-# Ridge and Lasso have fixed alpha values.
-# Elastic Net searches multiple mixing parameters.
+# Ridge: alpha = 0
+# Lasso: alpha = 1
+# Elastic Net: tune alpha with country-grouped CV
 
 alpha_grid <- list(
   Ridge = 0,
@@ -95,7 +100,11 @@ alpha_grid <- list(
 )
 
 lambda_grid <- exp(
-  seq(log(1000), log(0.0001), length.out = 200)
+  seq(
+    log(1000),
+    log(0.0001),
+    length.out = 200
+  )
 )
 
 dir.create(
@@ -150,7 +159,7 @@ for (model_name in names(alpha_grid)) {
       foldid = fold_id,
       family = "gaussian",
       type.measure = "mse",
-      standardize = TRUE,
+      standardize = FALSE,
       grouped = FALSE
     )
 
@@ -218,9 +227,10 @@ for (model_name in names(selected_models)) {
     alpha = best_alpha,
     lambda = best_lambda,
     family = "gaussian",
-    standardize = TRUE
+    standardize = FALSE
   )
 
+  # Predict using standardized test features
   predictions <- as.numeric(
     predict(final_model, newx = x_test)
   )
@@ -245,6 +255,7 @@ for (model_name in names(selected_models)) {
     )
   }
 
+  # Evaluate using the shared helper from issue #13
   test_results <- evaluate_model(
     actual = y_test,
     predicted = predictions,
@@ -271,32 +282,22 @@ for (model_name in names(selected_models)) {
 
     lasso_coefficients <- data.frame(
       feature = rownames(coefficient_matrix),
-      coefficient = as.numeric(coefficient_matrix[, 1])
+      coefficient = as.numeric(
+        coefficient_matrix[, 1]
+      )
     )
 
-    # Standardized coefficient magnitudes provide
-    # a more comparable feature-importance measure.
-    # The intercept is not included in this ranking.
+    # Predictors are already standardized.
+    # Coefficients are in life-expectancy years
+    # per one training-set standard deviation.
+    # The intercept is excluded from importance.
 
-    predictor_sds <- apply(x_train, 2, sd)
+    lasso_coefficients$abs_coefficient <-
+      abs(lasso_coefficients$coefficient)
 
-    lasso_coefficients$standardized_coefficient <- NA_real_
-
-    for (feature in predictors) {
-
-      row_index <- which(
-        lasso_coefficients$feature == feature
-      )
-
-      lasso_coefficients$standardized_coefficient[
-        row_index
-      ] <- lasso_coefficients$coefficient[
-        row_index
-      ] * predictor_sds[feature]
-    }
-
-    lasso_coefficients$abs_standardized_coefficient <-
-      abs(lasso_coefficients$standardized_coefficient)
+    lasso_coefficients$abs_coefficient[
+      lasso_coefficients$feature == "(Intercept)"
+    ] <- NA_real_
 
     write.csv(
       lasso_coefficients,
@@ -308,6 +309,7 @@ for (model_name in names(selected_models)) {
     print(lasso_coefficients)
   }
 
+  # Save trained model locally
   saveRDS(
     final_model,
     paste0(

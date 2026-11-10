@@ -9,7 +9,7 @@ CPTS 475 final project — Team Long Live Humanity.
 Open `Long-Live-Humanity.Rproj` in RStudio (this sets the working directory to the project root), then install packages once:
 
 ```r
-install.packages(c("WDI", "dplyr", "tidyr", "zoo", "readr", "ggplot2", "scales", "patchwork"))
+install.packages(c("WDI", "dplyr", "tidyr", "zoo", "readr", "ggplot2", "scales", "patchwork", "glmnet"))
 ```
 
 The EDA scripts need ggplot2 ≥ 3.4.0 and scales ≥ 1.2.0 (check with `packageVersion("ggplot2")` and `packageVersion("scales")`).
@@ -28,6 +28,10 @@ Run the scripts in order from the project root:
 | `R/03_eda_trends.R` | Mean life expectancy per year by income group and by region, for the same 127 countries every year (life expectancy taken from the raw file; see the script header). | `output/figures/life_exp_trend*.png`, `output/tables/life_exp_trends.csv` |
 | `R/04_features.R` | Adds model features to each variant: `year` as numeric, `region` / `income` as factors with fixed levels, and matching dummy columns (`region_*`, `income_*`). Reference levels: East Asia & Pacific, Low income. Adds the GDP × education interaction `log_gdp_x_sec_enroll` (`log_gdp_x_prim_enroll` in `prim`) and optional 1-year lags (`*_lag1`, same country, exactly the previous year; NA in a country's first year). Saves `feature_spec.rds` listing columns by role. | `data/processed/wdi_features*.{csv,rds}`, `data/processed/feature_spec.rds` |
 | `R/05_split_scale.R` | Splits by year (train 2000–2014, test 2015–2019), assigns 5 cross-validation folds grouped by country (training countries only), and standardizes numeric features with means/SDs from the **training rows only**, applied unchanged to the test rows. Keeps unscaled copies for tree models. In the scaled data the interaction is rebuilt from the standardized GDP and education columns. The US case-study rows are scaled with the main training parameters. | `data/processed/model_data*.rds`, `output/tables/scaling_params.csv` |
+| `R/06_evaluate.R` | Shared evaluation helper for calculating test RMSE, MAE, and R² and appending model results to a comparison CSV. | `output/tables/model_results.csv` (when called by a model script) |
+| `R/07_linear_regression.R` | Fits a four-predictor OLS baseline using the existing training split and five country-grouped CV folds. | `output/tables/ols_cv_folds.csv`, `output/tables/ols_cv_summary.csv`, `output/models/ols_4_predictors.rds` |
+| `R/08_polynomial_regression.R` | Compares polynomial degrees 1–3 using country-grouped CV, selects the degree with the lowest mean CV RMSE, and evaluates the selected model on the test set. | `output/tables/polynomial_cv_folds.csv`, `output/tables/polynomial_cv_summary.csv`, `output/models/polynomial_model.rds` |
+| `R/09_regularized_regression.R` | Fits Ridge, Lasso, and Elastic Net using standardized features. Tunes lambda and Elastic Net alpha with country-grouped CV and records Lasso coefficients. | `output/tables/regularized_cv_summary.csv`, `output/tables/lasso_coefficients.csv`, `output/models/*_model.rds` |
 
 What the EDA figures show is written up in [EDA-Findings.md](EDA-Findings.md). Each `R/03_eda_*.R` script has a hand-test checklist in `tests/manual/`. The figures and tables they produce are committed in `output/figures/` and `output/tables/`; re-run the scripts to regenerate them after the data changes.
 
@@ -50,6 +54,113 @@ For tuning, use the saved folds rather than making new ones, e.g. `cv.glmnet(x, 
 `life_exp` is never scaled, so errors stay in years. Dummy columns stay 0/1. Lag columns are NA in each country's first year; drop those rows (or the lag columns) in models that can't handle NA.
 
 Income group is WDI's current classification, so it doesn't change within a country over 2000–2019. North America is only Canada in the main dataset (16 rows).
+
+
+## Regression Models (Issues #13–16)
+
+The project implements five regression models across three approaches (ordinary least squares, polynomial regression, and regularized regression) for predicting life expectancy using four World Development Indicators.
+
+- `log_gdp_pc`: Log GDP per capita
+- `sec_enroll`: Secondary school enrollment
+- `u5_mort`: Under-five mortality
+- `log_pop`: Log population
+
+The target variable is `life_exp`, measured in years.
+
+### Training and Evaluation
+
+All regression models use the prepared main dataset stored in `data/processed/model_data.rds`.
+
+- Training period: 2000–2014 (1,828 observations)
+- Test period: 2015–2019 (581 observations)
+- Cross-validation: Five folds grouped by country
+- Evaluation metrics: RMSE, MAE, and R²
+
+Country-grouped cross-validation ensures that observations from the same country are assigned to the same validation fold.
+
+The held-out test set is not used to select model hyperparameters.
+
+### Models
+
+**Ordinary Least Squares (OLS)**
+
+`R/07_linear_regression.R`
+
+Fits a linear regression model using the four predictors. Reports five-fold cross-validation results and evaluates the fitted model on the held-out test set.
+
+**Polynomial Regression**
+
+`R/08_polynomial_regression.R`
+
+Extends OLS by adding squared and cubic terms for individual predictors, without cross-predictor interaction terms.
+
+Compares polynomial degrees 1, 2, and 3 using country-grouped cross-validation. The degree with the lowest mean validation RMSE is selected.
+
+**Regularized Regression**
+
+`R/09_regularized_regression.R`
+
+Implements three regularized linear models using `glmnet`:
+
+- Ridge (L2): alpha = 0
+- Lasso (L1): alpha = 1
+- Elastic Net (L1 + L2): alpha selected from 0.25, 0.5, and 0.75
+
+Lambda is tuned using country-grouped cross-validation for each model.
+
+Regularized regression uses `model_data$train_scaled` and `model_data$test_scaled`, which were standardized using the training-set means and standard deviations.
+
+Because the scaling parameters were calculated using the full training period, validation-fold feature distributions contribute to the preprocessing statistics. This introduces limited preprocessing leakage within cross-validation, but not from the held-out test set.
+
+The regularized models use `standardize = FALSE` in `glmnet` to avoid applying an additional scaling transformation.
+
+### Running the Models
+
+From the project root, after generating `data/processed/model_data.rds`, run:
+
+```powershell
+Rscript.exe R/07_linear_regression.R
+Rscript.exe R/08_polynomial_regression.R
+Rscript.exe R/09_regularized_regression.R
+```
+
+The shared evaluation helper (`R/06_evaluate.R`) is loaded automatically by each model script.
+
+### Model Results
+
+The following held-out test results were obtained using the main dataset:
+
+| Model | RMSE | MAE | R² |
+|---|---:|---:|---:|
+| OLS | 2.7128 | 2.1576 | 0.8516 |
+| Polynomial (degree 2) | 2.3393 | 1.9103 | 0.8896 |
+| Ridge | 2.7153 | 2.1567 | 0.8513 |
+| Lasso | 2.7271 | 2.1611 | 0.8500 |
+| Elastic Net | 2.7285 | 2.1624 | 0.8498 |
+
+Polynomial regression achieved the lowest test RMSE among these models.
+
+Regularization did not substantially improve test accuracy compared with OLS. However, Lasso eliminated secondary school enrollment by assigning it a coefficient of zero.
+
+These results describe predictive associations and should not be interpreted as causal relationships.
+
+### Output Files
+
+Regression results are saved in `output/tables/`:
+
+| File | Description |
+|---|---|
+| `model_results.csv` | Test RMSE, MAE, and R² for all regression models |
+| `ols_cv_folds.csv` | OLS cross-validation metrics for each fold |
+| `ols_cv_summary.csv` | OLS cross-validation summary |
+| `polynomial_cv_folds.csv` | Polynomial cross-validation results by degree and fold |
+| `polynomial_cv_summary.csv` | Polynomial cross-validation summary by degree |
+| `regularized_cv_summary.csv` | Alpha, lambda, and CV RMSE for regularized models |
+| `lasso_coefficients.csv` | Lasso coefficients for feature-importance discussion |
+
+Trained models are saved locally in `output/models/` as `.rds` files. This directory is excluded from Git tracking because the models can be regenerated by running the scripts.
+
+The model scripts replace their existing entries in `model_results.csv` when rerun, preventing duplicate model results.
 
 ## Dataset variants
 
@@ -103,7 +214,8 @@ data/raw/          untouched API download
 data/processed/    cleaned datasets (wdi_clean*), features (wdi_features*),
                    model-ready split/scaling/folds (model_data*)
 output/figures/    ggplot2 figures (EDA figures from R/03_eda_*.R)
-output/tables/     cleaning, scaling, CV-fold and EDA tables
+output/tables/     cleaning, scaling, CV-fold, EDA, cross-validation, and model evaluation results
+output/models/     locally saved trained models (Git-ignored)
 EDA-Findings.md    written interpretations of the EDA figures
 Project-Progress.md  status, decisions, closed and open issues
 ```

@@ -10,7 +10,7 @@ Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/
 
 - **Closed: 10 of 32 issues** (#3–#12), plus 2 merged pull requests (#33, #34).
 - **Data, features, splits and EDA are done.** Model scripts can start from `data/processed/model_data.rds` (see the README).
-- **Next:** the baseline models and check-in write-up (#13–#18), and the two EDA summary items (#1, #2).
+- **Next, due at the midpoint check-in on 11/10/26:** the baseline models and check-in write-up (#13–#18), and the two EDA summary items (#1, #2). The 3+ baseline models (#13–#17) are the one check-in requirement not yet met.
 - **Follow-ups from PR #34 are fixed in this update:** EDA figures and tables committed, four trend values corrected (see [below](#follow-ups-from-pr-34)).
 
 ## Who's doing what (midpoint check-in)
@@ -24,7 +24,7 @@ Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/
 
 Week 4 and later issues (#19–#32) aren't assigned yet.
 
-## Midpoint check-in requirements (November 4)
+## Midpoint check-in requirements (due November 10, 2026)
 
 Per the proposal:
 
@@ -126,7 +126,7 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 
 ## Still to do
 
-### Midpoint check-in (overdue)
+### Midpoint check-in (due 11/10/26)
 
 - [ ] Summary statistics table — [#1](https://github.com/yohannsharma/long-live/issues/1) (Aiden)
 - [ ] Missingness heatmap (data in `output/tables/missingness_by_indicator_year.csv`) — [#2](https://github.com/yohannsharma/long-live/issues/2) (Aiden)

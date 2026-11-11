@@ -20,7 +20,7 @@ Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/
 | **Michael** (@Erouy) | [#3](https://github.com/yohannsharma/long-live/issues/3), [#4](https://github.com/yohannsharma/long-live/issues/4), [#5](https://github.com/yohannsharma/long-live/issues/5), [#6](https://github.com/yohannsharma/long-live/issues/6), [#7](https://github.com/yohannsharma/long-live/issues/7) | EDA figures and written interpretations | **All closed** (PR #34); follow-ups fixed |
 | **Yohann** (@yohannsharma) | [#8](https://github.com/yohannsharma/long-live/issues/8), [#9](https://github.com/yohannsharma/long-live/issues/9), [#10](https://github.com/yohannsharma/long-live/issues/10), [#11](https://github.com/yohannsharma/long-live/issues/11), [#12](https://github.com/yohannsharma/long-live/issues/12) | Features, standardizing, time split, CV folds | **All closed** |
 | **Josh** (@JoshABurk) | [#13](https://github.com/yohannsharma/long-live/issues/13), [#14](https://github.com/yohannsharma/long-live/issues/14), [#15](https://github.com/yohannsharma/long-live/issues/15), [#16](https://github.com/yohannsharma/long-live/issues/16) | Metrics helper and baseline models | Open |
-| **Aiden** (@AidenBoyer) | [#1](https://github.com/yohannsharma/long-live/issues/1), [#2](https://github.com/yohannsharma/long-live/issues/2), [#17](https://github.com/yohannsharma/long-live/issues/17), [#18](https://github.com/yohannsharma/long-live/issues/18) | Summary stats, missingness heatmap, results table, check-in write-up | Open |
+| **Aiden** (@AidenBoyer) | [#1](https://github.com/yohannsharma/long-live/issues/1), [#2](https://github.com/yohannsharma/long-live/issues/2), [#17](https://github.com/yohannsharma/long-live/issues/17), [#18](https://github.com/yohannsharma/long-live/issues/18) | Summary stats, missingness heatmap, results table, check-in write-up | #1, #2 Closed, Rest Open |
 
 Week 4 and later issues (#19–#32) aren't assigned yet.
 
@@ -36,6 +36,8 @@ Per the proposal:
 
 | Issue | What | Closed | Done in |
 |---|---|---|---|
+| [#1](https://github.com/yohannsharma/long-live/issues/1) | Summary statistics table | 2026-11-10 | `R/03_eda_wdi_summary.R` (PR #?) |
+| [#2](https://github.com/yohannsharma/long-live/issues/2) | Missing predictor percentage by year  | 2026-11-10 | `R/03_eda_missingness_heatmap.R` (PR #?) |
 | [#3](https://github.com/yohannsharma/long-live/issues/3) | Histograms of each variable | 2026-11-09 | `R/03_eda_histograms.R` (PR #34) |
 | [#4](https://github.com/yohannsharma/long-live/issues/4) | Correlation matrix | 2026-11-09 | `R/03_eda_correlation.R` (PR #34) |
 | [#5](https://github.com/yohannsharma/long-live/issues/5) | Scatterplots of each predictor vs. life expectancy | 2026-11-09 | `R/03_eda_scatter.R` (PR #34) |
@@ -128,8 +130,6 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 
 ### Midpoint check-in (due 11/10/26)
 
-- [ ] Summary statistics table — [#1](https://github.com/yohannsharma/long-live/issues/1) (Aiden)
-- [ ] Missingness heatmap (data in `output/tables/missingness_by_indicator_year.csv`) — [#2](https://github.com/yohannsharma/long-live/issues/2) (Aiden)
 - [ ] Shared metrics helper (RMSE, MAE, R²) — [#13](https://github.com/yohannsharma/long-live/issues/13) (Josh)
 - [ ] Linear regression (baseline) — [#14](https://github.com/yohannsharma/long-live/issues/14) (Josh)
 - [ ] Polynomial regression — [#15](https://github.com/yohannsharma/long-live/issues/15) (Josh)

@@ -8,19 +8,19 @@ df_wide <- read.csv("output/tables/missingness_by_indicator_year.csv")
 # 3. Pivot from wide to long format
 df_long <- pivot_longer(df_wide, 
                         cols = -"year", 
-                        names_to = "Indicator", 
+                        names_to = "Predictor", 
                         values_to = "Value")
 
 # 4. Create the heatmap
-p <- ggplot(df_long, aes(x = year, y = Indicator, fill = Value)) +
+p <- ggplot(df_long, aes(x = year, y = Predictor, fill = Value)) +
   geom_tile(color = "white") +
   scale_fill_viridis_c(option = "viridis") +
   coord_fixed() +
   theme_minimal() +
   labs(
-    title = "Missing Indicator by Year",
+    title = "Missing Predictor by Year",
     x = "Year",
-    y = "Indicator",
+    y = "Predictor",
     fill = "Missing (%)"
   ) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))

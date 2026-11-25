@@ -2,16 +2,17 @@
 
 Tracks what's done and what's left against the project proposal. Tick boxes as work is pushed.
 
-*Last updated: 2026-11-09*
+*Last updated: 2026-11-24*
 
 Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/issues), grouped by [milestone](https://github.com/yohannsharma/long-live/milestones). Close the issue when its work is pushed.
 
 ## Status at a glance
 
-- **Closed: 10 of 32 issues** (#3–#12), plus 2 merged pull requests (#33, #34).
-- **Data, features, splits and EDA are done.** Model scripts can start from `data/processed/model_data.rds` (see the README).
-- **Next, due at the midpoint check-in on 11/10/26:** the baseline models and check-in write-up (#13–#18), and the two EDA summary items (#1, #2). The 3+ baseline models (#13–#17) are the one check-in requirement not yet met.
-- **Follow-ups from PR #34 are fixed in this update:** EDA figures and tables committed, four trend values corrected (see [below](#follow-ups-from-pr-34)).
+- **Closed: 18 of 40 issues** (#1–#18), plus merged pull requests #33–#38.
+- **Data, features, splits, EDA, the five baseline models and the midpoint check-in are done.**
+- **Team change (2026-11-24):** Aiden (@AidenBoyer) has dropped the class. His finished work (#1, #2, PR #38) stays credited to him; his open check-in issues (#17, #18) were closed as done. All remaining work is split between Michael, Josh and Yohann ([below](#whos-doing-what-after-the-check-in)).
+- **Peer feedback (11/10)** asked whether region / income group would improve predictions and where each model is suited or limited. New issues [#39](https://github.com/yohannsharma/long-live/issues/39) and [#40](https://github.com/yohannsharma/long-live/issues/40) cover it, and #25 was updated.
+- **Behind schedule:** the Week 4–6 milestone dates (11/7, 11/14, 11/21) have passed. Final presentation 12/7–12/14, submission 12/18.
 
 ## Who's doing what (midpoint check-in)
 
@@ -19,10 +20,19 @@ Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/
 |---|---|---|---|
 | **Michael** (@Erouy) | [#3](https://github.com/yohannsharma/long-live/issues/3), [#4](https://github.com/yohannsharma/long-live/issues/4), [#5](https://github.com/yohannsharma/long-live/issues/5), [#6](https://github.com/yohannsharma/long-live/issues/6), [#7](https://github.com/yohannsharma/long-live/issues/7) | EDA figures and written interpretations | **All closed** (PR #34); follow-ups fixed |
 | **Yohann** (@yohannsharma) | [#8](https://github.com/yohannsharma/long-live/issues/8), [#9](https://github.com/yohannsharma/long-live/issues/9), [#10](https://github.com/yohannsharma/long-live/issues/10), [#11](https://github.com/yohannsharma/long-live/issues/11), [#12](https://github.com/yohannsharma/long-live/issues/12) | Features, standardizing, time split, CV folds | **All closed** |
-| **Josh** (@JoshABurk) | [#13](https://github.com/yohannsharma/long-live/issues/13), [#14](https://github.com/yohannsharma/long-live/issues/14), [#15](https://github.com/yohannsharma/long-live/issues/15), [#16](https://github.com/yohannsharma/long-live/issues/16) | Metrics helper and baseline models | Open |
-| **Aiden** (@AidenBoyer) | [#1](https://github.com/yohannsharma/long-live/issues/1), [#2](https://github.com/yohannsharma/long-live/issues/2), [#17](https://github.com/yohannsharma/long-live/issues/17), [#18](https://github.com/yohannsharma/long-live/issues/18) | Summary stats, missingness heatmap, results table, check-in write-up | #1, #2 Closed, Rest Open |
+| **Josh** (@JoshABurk) | [#13](https://github.com/yohannsharma/long-live/issues/13), [#14](https://github.com/yohannsharma/long-live/issues/14), [#15](https://github.com/yohannsharma/long-live/issues/15), [#16](https://github.com/yohannsharma/long-live/issues/16) | Metrics helper and baseline models | **All closed** (PR #37) |
+| **Aiden** (@AidenBoyer) — dropped the class | [#1](https://github.com/yohannsharma/long-live/issues/1), [#2](https://github.com/yohannsharma/long-live/issues/2) | Summary stats, missingness heatmap | **Closed** (PR #38). #17 and #18 closed as done after he left. |
 
-Week 4 and later issues (#19–#32) aren't assigned yet.
+## Who's doing what (after the check-in)
+
+| Who | Issues | Workstream |
+|---|---|---|
+| **Josh** (@JoshABurk) | [#19](https://github.com/yohannsharma/long-live/issues/19), [#20](https://github.com/yohannsharma/long-live/issues/20), [#21](https://github.com/yohannsharma/long-live/issues/21), [#22](https://github.com/yohannsharma/long-live/issues/22), [#25](https://github.com/yohannsharma/long-live/issues/25), [#31](https://github.com/yohannsharma/long-live/issues/31) | Decision tree, random forest, gradient boosting, XGBoost; model comparison; final slides |
+| **Yohann** (@yohannsharma) | [#24](https://github.com/yohannsharma/long-live/issues/24), [#27](https://github.com/yohannsharma/long-live/issues/27), [#29](https://github.com/yohannsharma/long-live/issues/29), [#39](https://github.com/yohannsharma/long-live/issues/39) | Tuning consistency; time windows (from the proposal); robustness datasets; extended-feature baselines (region / income) |
+| **Michael** (@Erouy) | [#23](https://github.com/yohannsharma/long-live/issues/23), [#26](https://github.com/yohannsharma/long-live/issues/26), [#28](https://github.com/yohannsharma/long-live/issues/28), [#30](https://github.com/yohannsharma/long-live/issues/30), [#40](https://github.com/yohannsharma/long-live/issues/40) | Neural network; feature importance; case studies (incl. US); residual analysis; final report |
+| **Everyone** | [#32](https://github.com/yohannsharma/long-live/issues/32) | Final submission (12/18) |
+
+#27: Yohann gets the four time windows from the project proposal (see the note on the issue).
 
 ## Midpoint check-in requirements (due November 10, 2026)
 
@@ -30,14 +40,14 @@ Per the proposal:
 
 - [x] Cleaned data
 - [x] EDA figures — **at least 2 meaningful visualizations, each with a written interpretation**: three figures written up in [EDA-Findings.md](EDA-Findings.md), with the PNGs in `output/figures/`.
-- [ ] Baseline results — **at least 3 models, methods, or configurations tested** (#13–#17)
+- [x] Baseline results — **at least 3 models, methods, or configurations tested**: five models in `output/tables/model_results.csv` (#13–#17, PR #37)
 
 ## Closed issues
 
 | Issue | What | Closed | Done in |
 |---|---|---|---|
-| [#1](https://github.com/yohannsharma/long-live/issues/1) | Summary statistics table | 2026-11-10 | `R/03_eda_wdi_summary.R` (PR #?) |
-| [#2](https://github.com/yohannsharma/long-live/issues/2) | Missing predictor percentage by year  | 2026-11-10 | `R/03_eda_missingness_heatmap.R` (PR #?) |
+| [#1](https://github.com/yohannsharma/long-live/issues/1) | Summary statistics table | 2026-11-10 | `R/03_eda_wdi_summary.R` (PR #38) |
+| [#2](https://github.com/yohannsharma/long-live/issues/2) | Missing predictor percentage by year  | 2026-11-10 | `R/03_eda_missingness_heatmap.R` (PR #38) |
 | [#3](https://github.com/yohannsharma/long-live/issues/3) | Histograms of each variable | 2026-11-09 | `R/03_eda_histograms.R` (PR #34) |
 | [#4](https://github.com/yohannsharma/long-live/issues/4) | Correlation matrix | 2026-11-09 | `R/03_eda_correlation.R` (PR #34) |
 | [#5](https://github.com/yohannsharma/long-live/issues/5) | Scatterplots of each predictor vs. life expectancy | 2026-11-09 | `R/03_eda_scatter.R` (PR #34) |
@@ -128,19 +138,16 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 
 ## Still to do
 
-### Midpoint check-in (due 11/10/26)
+### Midpoint check-in (11/10/26) — done
 
-- [ ] Shared metrics helper (RMSE, MAE, R²) — [#13](https://github.com/yohannsharma/long-live/issues/13) (Josh)
-- [ ] Linear regression (baseline) — [#14](https://github.com/yohannsharma/long-live/issues/14) (Josh)
-- [ ] Polynomial regression — [#15](https://github.com/yohannsharma/long-live/issues/15) (Josh)
-- [ ] Ridge, lasso, elastic net — [#16](https://github.com/yohannsharma/long-live/issues/16) (Josh)
-- [ ] **At least 3 models fitted, reporting test RMSE, MAE and R²** (check-in requirement) — [#17](https://github.com/yohannsharma/long-live/issues/17) (Aiden)
-- [ ] Short summary or slides of the cleaned data, figures, and first model results — [#18](https://github.com/yohannsharma/long-live/issues/18) (Aiden)
+- [x] Shared metrics helper, linear, polynomial, ridge / lasso / elastic net — #13–#16 (Josh, PR #37)
+- [x] At least 3 models with test RMSE, MAE and R² — #17 (results in the README and `model_results.csv`)
+- [x] Check-in summary — #18
 
-### After the check-in (unassigned)
+### After the check-in
 
-- [ ] **Week 4 (10/31–11/7):** decision tree, random forest, gradient boosting, XGBoost, neural network; hyperparameter tuning — #19–#24
-- [ ] **Week 5 (11/7–11/14):** model comparison, feature importance (permutation importance, SHAP), analysis across the four time windows, country case studies (including the US, `wdi_features_usa.rds`), robustness checks on the `prim`, `noedu` and `gap7` datasets — #25–#29
-- [ ] **Week 6 (11/14–11/21):** report and slides, final figures, internal review — #30, #31
+- [ ] **Models:** decision tree #19, random forest #20, gradient boosting #21, XGBoost #22 (Josh); tuning #24, extended features #39 (Yohann); neural network #23 (Michael)
+- [ ] **Analysis:** model comparison #25 (Josh); time windows #27, robustness on `prim` / `noedu` / `gap7` #29 (Yohann); feature importance #26, case studies incl. the US #28, residuals by income / region #40 (Michael)
+- [ ] **Report and slides:** report #30 (Michael), slides #31 (Josh)
 - [ ] **Final presentation:** 12/7–12/14 — #31
-- [ ] **Final submission:** 12/18 (report, code, slides) — #32
+- [ ] **Final submission:** 12/18 (report, code, slides) — #32 (everyone)

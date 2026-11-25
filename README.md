@@ -4,6 +4,8 @@ CPTS 475 final project — Team Long Live Humanity.
 
 **Status (2026-11-09):** data collection, cleaning, EDA, feature engineering, the train/test split, scaling and CV folds are done (issues #3–#12 closed). Baseline models (#13–#17) are next. See [Project-Progress.md](Project-Progress.md) for what's done, what's left and who's doing it.
 
+**Final report (draft):** [Google Doc](https://docs.google.com/document/d/1EA8xeNlA5kI-wIdxPxFxgtvZnaxNoGQ7lfWZ8AOIbYQ/edit) ([#30](https://github.com/yohannsharma/long-live/issues/30)). Sections waiting on an open issue are marked **TO DO** with the issue number and owner; replace the marker with your results.
+
 ## Setup
 
 Open `Long-Live-Humanity.Rproj` in RStudio (this sets the working directory to the project root), then install packages once:

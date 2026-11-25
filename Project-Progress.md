@@ -27,12 +27,12 @@ Every item below has a [GitHub issue](https://github.com/yohannsharma/long-live/
 
 | Who | Issues | Workstream |
 |---|---|---|
-| **Josh** (@JoshABurk) | [#19](https://github.com/yohannsharma/long-live/issues/19), [#20](https://github.com/yohannsharma/long-live/issues/20), [#22](https://github.com/yohannsharma/long-live/issues/22), [#25](https://github.com/yohannsharma/long-live/issues/25), [#31](https://github.com/yohannsharma/long-live/issues/31) | Decision tree, random forest, XGBoost; model comparison; final slides |
-| **Yohann** (@yohannsharma) | [#21](https://github.com/yohannsharma/long-live/issues/21), [#24](https://github.com/yohannsharma/long-live/issues/24), [#27](https://github.com/yohannsharma/long-live/issues/27), [#29](https://github.com/yohannsharma/long-live/issues/29), [#39](https://github.com/yohannsharma/long-live/issues/39) | Gradient boosting; tuning consistency; time windows; robustness datasets; extended-feature baselines (region / income) |
+| **Josh** (@JoshABurk) | [#19](https://github.com/yohannsharma/long-live/issues/19), [#20](https://github.com/yohannsharma/long-live/issues/20), [#21](https://github.com/yohannsharma/long-live/issues/21), [#22](https://github.com/yohannsharma/long-live/issues/22), [#25](https://github.com/yohannsharma/long-live/issues/25), [#31](https://github.com/yohannsharma/long-live/issues/31) | Decision tree, random forest, gradient boosting, XGBoost; model comparison; final slides |
+| **Yohann** (@yohannsharma) | [#24](https://github.com/yohannsharma/long-live/issues/24), [#27](https://github.com/yohannsharma/long-live/issues/27), [#29](https://github.com/yohannsharma/long-live/issues/29), [#39](https://github.com/yohannsharma/long-live/issues/39) | Tuning consistency; time windows (from the proposal); robustness datasets; extended-feature baselines (region / income) |
 | **Michael** (@Erouy) | [#23](https://github.com/yohannsharma/long-live/issues/23), [#26](https://github.com/yohannsharma/long-live/issues/26), [#28](https://github.com/yohannsharma/long-live/issues/28), [#30](https://github.com/yohannsharma/long-live/issues/30), [#40](https://github.com/yohannsharma/long-live/issues/40) | Neural network; feature importance; case studies (incl. US); residual analysis; final report |
 | **Everyone** | [#32](https://github.com/yohannsharma/long-live/issues/32) | Final submission (12/18) |
 
-#27 needs the four time windows from the proposal; they aren't written down in the repo yet.
+#27: Yohann gets the four time windows from the project proposal (see the note on the issue).
 
 ## Midpoint check-in requirements (due November 10, 2026)
 
@@ -146,7 +146,7 @@ All of this is produced by `R/02_clean_wdi.R` (the `gap7` variant and the US fil
 
 ### After the check-in
 
-- [ ] **Models:** decision tree #19, random forest #20, XGBoost #22 (Josh); gradient boosting #21, tuning #24, extended features #39 (Yohann); neural network #23 (Michael)
+- [ ] **Models:** decision tree #19, random forest #20, gradient boosting #21, XGBoost #22 (Josh); tuning #24, extended features #39 (Yohann); neural network #23 (Michael)
 - [ ] **Analysis:** model comparison #25 (Josh); time windows #27, robustness on `prim` / `noedu` / `gap7` #29 (Yohann); feature importance #26, case studies incl. the US #28, residuals by income / region #40 (Michael)
 - [ ] **Report and slides:** report #30 (Michael), slides #31 (Josh)
 - [ ] **Final presentation:** 12/7–12/14 — #31
